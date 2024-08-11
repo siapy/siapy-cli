@@ -3,6 +3,6 @@
 set -e
 set -x
 
-pdm run mypy source
-pdm run ruff check source
-pdm run ruff format source --check
+pdm run mypy source main.py
+pdm run ruff check source main.py
+pdm run ruff format source main.py --check
