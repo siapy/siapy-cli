@@ -1,7 +1,6 @@
 venv
 __pycache__
 dist
-tests/data
 .venv
 .idea
 .ruff_cache
@@ -12,3 +11,6 @@ tests/data
 .pdm-python
 .coverage
 .vscode
+_old
+saved
+.env
