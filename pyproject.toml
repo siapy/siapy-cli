@@ -5,6 +5,7 @@ description = "Effortlessly segment spectral images using the siapy package."
 authors = [{ name = "janezlapajne", email = "janez.lapajne@kis.si" }]
 dependencies = [
     "siapy>=0.4.0",
+    "loguru>=0.7.2",
 ]
 requires-python = "==3.10.*"
 readme = "README.md"
