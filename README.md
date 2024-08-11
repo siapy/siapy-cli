@@ -1,0 +1,1 @@
+# spectral-images-segmentator

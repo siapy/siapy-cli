@@ -1,0 +1,41 @@
+[project]
+name = "spectral-images-segmentator"
+version = "0.1.0"
+description = "Effortlessly segment spectral images using the siapy package."
+authors = [{ name = "janezlapajne", email = "janez.lapajne@kis.si" }]
+dependencies = [
+    "siapy>=0.4.0",
+]
+requires-python = "==3.10.*"
+readme = "README.md"
+license = { text = "MIT" }
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+lint = ["ruff>=0.4.8", "mypy>=1.10.1", "pandas-stubs>=2.2.2.240603"]
+dev = ["pre-commit>=3.7.1", "tomli>=2.0.1", "codespell>=2.3.0"]
+
+[tool.mypy]
+mypy_path = "stubs"
+
+[[tool.mypy.overrides]]
+module = "spectral"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "sklearn.*"
+ignore_missing_imports = true
+
+[tool.ruff]
+extend-exclude = []
+exclude = []
+lint.ignore = ["F811"]
+
+[tool.codespell]
+ignore-words-list = "janezlapajne"
+skip = 'dist/*, docs, LICENCE, *.lock, *.toml, *.cff'
+count = true
+check-hidden = false
