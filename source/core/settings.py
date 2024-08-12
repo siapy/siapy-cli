@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=DOTENV_PATH,
         env_file_encoding="utf-8",
-        cli_parse_args=True,
+        cli_parse_args=False,
     )
 
 

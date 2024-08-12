@@ -5,7 +5,7 @@
 groups = ["default", "dev", "lint"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:7b04645e6abcf9237cb757035b561be74c25f7de2d90cc16fe2aa7efac234309"
+content_hash = "sha256:ad1b08466bebff9620f2b5e44868ef059b52362117834987257ecab2e355ca48"
 
 [[metadata.targets]]
 requires_python = "==3.10.*"
@@ -1593,6 +1593,17 @@ files = [
 ]
 
 [[package]]
+name = "shellingham"
+version = "1.5.4"
+requires_python = ">=3.7"
+summary = "Tool to Detect Surrounding Shell"
+groups = ["default"]
+files = [
+    {file = "shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"},
+    {file = "shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de"},
+]
+
+[[package]]
 name = "siapy"
 version = "0.4.0"
 requires_python = ">=3.10"
@@ -1770,6 +1781,23 @@ dependencies = [
 files = [
     {file = "tqdm-4.66.5-py3-none-any.whl", hash = "sha256:90279a3770753eafc9194a0364852159802111925aa30eb3f9d85b0e805ac7cd"},
     {file = "tqdm-4.66.5.tar.gz", hash = "sha256:e1020aef2e5096702d8a025ac7d16b1577279c9d63f8375b63083e9a5f0fcbad"},
+]
+
+[[package]]
+name = "typer"
+version = "0.12.3"
+requires_python = ">=3.7"
+summary = "Typer, build great CLIs. Easy to code. Based on Python type hints."
+groups = ["default"]
+dependencies = [
+    "click>=8.0.0",
+    "rich>=10.11.0",
+    "shellingham>=1.3.0",
+    "typing-extensions>=3.7.4.3",
+]
+files = [
+    {file = "typer-0.12.3-py3-none-any.whl", hash = "sha256:070d7ca53f785acbccba8e7d28b08dcd88f79f1fbda035ade0aecec71ca5c914"},
+    {file = "typer-0.12.3.tar.gz", hash = "sha256:49e73131481d804288ef62598d97a1ceef3058905aa536a1134f90891ba35482"},
 ]
 
 [[package]]
