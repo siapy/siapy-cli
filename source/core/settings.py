@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from dotenv import load_dotenv
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 DOTENV_PATH = ".env"
@@ -14,14 +15,31 @@ load_dotenv(override=True, dotenv_path=DOTENV_PATH)
 
 
 class Settings(BaseSettings):
-    images_dir: str = ""
-    debug: bool = False
+    images_dir: Path = Field(
+        default=None, description="Path to spectral images directory."
+    )
+    debug: bool = Field(
+        default=False, description="If logging displays debug information."
+    )
 
     model_config = SettingsConfigDict(
         env_file=DOTENV_PATH,
         env_file_encoding="utf-8",
         cli_parse_args=False,
+        env_ignore_empty=True,
     )
+
+    @field_validator("images_dir", mode="before")
+    @classmethod
+    def correct_path(cls, v):
+        if v is None:
+            raise ValueError("Define 'IMAGES_DIR' in .env file.")
+        if ":\\" in str(v):
+            path = str(v).replace("F:\\", "/mnt/f/").replace("\\", "/")
+            if path.startswith('r"') and path.endswith('"'):
+                path = path[2:-1]
+            return Path(path)
+        return v
 
 
 settings = Settings()
