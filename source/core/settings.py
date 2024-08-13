@@ -31,15 +31,19 @@ class Settings(BaseSettings):
 
     @field_validator("images_dir", mode="before")
     @classmethod
-    def correct_path(cls, v):
-        if v is None:
+    def correct_path(cls, path):
+        if path is None:
             raise ValueError("Define 'IMAGES_DIR' in .env file.")
-        if ":\\" in str(v):
-            path = str(v).replace("F:\\", "/mnt/f/").replace("\\", "/")
+        if ":\\" in str(path):
+            path = str(path).replace("F:\\", "/mnt/f/").replace("\\", "/")
             if path.startswith('r"') and path.endswith('"'):
                 path = path[2:-1]
-            return Path(path)
-        return v
+        path = Path(path)
+        if not path.is_dir():
+            raise ValueError(
+                f"Ensure defined 'IMAGES_DIR' is a directory. Current value: {path}."
+            )
+        return path
 
 
 settings = Settings()
