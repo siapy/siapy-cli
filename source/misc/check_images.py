@@ -1,9 +1,7 @@
 from pathlib import Path
 
-import numpy as np
-from siapy.entities import SpectralImageSet
 
-from source.core import logger, settings
+from source.core import settings
 
 
 def parse_labels(filename, labels_path_deliminator, labels_deliminator):
