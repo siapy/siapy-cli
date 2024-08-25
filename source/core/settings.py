@@ -21,6 +21,12 @@ class Settings(BaseSettings):
     debug: bool = Field(
         default=False, description="If logging displays debug information."
     )
+    header_file_suffix: str = ".hdr"
+    image_file_suffix: str = ".img"
+    camera1_id:str = "VNIR_1600_SN0034"
+    camera2_id:str = "SWIR_384me_SN3109"
+    labels_part_deliminator:str = "__"
+    labels_between_deliminator:str = "_"
 
     model_config = SettingsConfigDict(
         env_file=DOTENV_PATH,
