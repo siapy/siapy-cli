@@ -1,7 +1,7 @@
 import numpy as np
 
 from source.core import logger, settings
-from source.helpers import read_spectral_images
+from source.helpers import extract_labels_from_spectral_image, read_spectral_images
 
 
 def check_duplicate_labels(labels):
@@ -16,16 +16,10 @@ def check_duplicate_labels(labels):
 def check_spectral_images():
     image_set_cam1, image_set_cam2 = read_spectral_images()
     labels_cam1 = [
-        image_cam1.filepath.name.split(settings.labels_part_deliminator)[0].split(
-            settings.labels_between_deliminator
-        )
-        for image_cam1 in image_set_cam1
+        extract_labels_from_spectral_image(image) for image in image_set_cam1
     ]
     labels_cam2 = [
-        image_cam2.filepath.name.split(settings.labels_part_deliminator)[0].split(
-            settings.labels_between_deliminator
-        )
-        for image_cam2 in image_set_cam2
+        extract_labels_from_spectral_image(image) for image in image_set_cam1
     ]
 
     labels_cam1 = list(np.concatenate(labels_cam1))

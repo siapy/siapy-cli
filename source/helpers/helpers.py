@@ -31,3 +31,9 @@ def read_spectral_images() -> tuple[list[SpectralImage], list[SpectralImage]]:
     image_set_cam2 = image_set.images_by_camera_id(settings.camera2_id)
 
     return image_set_cam1, image_set_cam2
+
+
+def extract_labels_from_spectral_image(image: SpectralImage) -> list[str]:
+    return image.filepath.name.split(settings.labels_part_deliminator)[0].split(
+        settings.labels_between_deliminator
+    )
