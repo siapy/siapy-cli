@@ -1,9 +1,7 @@
-from pathlib import Path
-
 import numpy as np
-from siapy.entities.imagesets import SpectralImageSet
 
 from source.core import logger, settings
+from source.helpers import read_spectral_images
 
 
 def check_duplicate_labels(labels):
@@ -16,30 +14,7 @@ def check_duplicate_labels(labels):
 
 
 def check_spectral_images():
-    file_paths = [
-        Path(file) for file in Path(settings.images_dir).glob("*") if file.is_file()
-    ]
-
-    header_paths = [
-        path
-        for idx, path in enumerate(file_paths)
-        if file_paths[idx].suffixes[0] == settings.header_file_suffix
-    ]
-    image_paths = [
-        path
-        for idx, path in enumerate(file_paths)
-        if file_paths[idx].suffixes[0] == settings.image_file_suffix
-    ]
-
-    image_set = SpectralImageSet.from_paths(
-        header_paths=header_paths, image_paths=image_paths
-    )
-
-    # cameras_id = image_set.cameras_id
-
-    image_set_cam1 = image_set.images_by_camera_id(settings.camera1_id)
-    image_set_cam2 = image_set.images_by_camera_id(settings.camera2_id)
-
+    image_set_cam1, image_set_cam2 = read_spectral_images()
     labels_cam1 = [
         image_cam1.filepath.name.split(settings.labels_part_deliminator)[0].split(
             settings.labels_between_deliminator

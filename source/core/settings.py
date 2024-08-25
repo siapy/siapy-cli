@@ -15,6 +15,10 @@ load_dotenv(override=True, dotenv_path=DOTENV_PATH)
 
 
 class Settings(BaseSettings):
+    project_name: str = Field(
+        default=None,
+        description="Project name - artifacts saved under this name in 'saved' dictionary",
+    )
     images_dir: Path = Field(
         default=None, description="Path to spectral images directory."
     )
@@ -23,10 +27,10 @@ class Settings(BaseSettings):
     )
     header_file_suffix: str = ".hdr"
     image_file_suffix: str = ".img"
-    camera1_id:str = "VNIR_1600_SN0034"
-    camera2_id:str = "SWIR_384me_SN3109"
-    labels_part_deliminator:str = "__"
-    labels_between_deliminator:str = "_"
+    camera1_id: str = "VNIR_1600_SN0034"
+    camera2_id: str = "SWIR_384me_SN3109"
+    labels_part_deliminator: str = "__"
+    labels_between_deliminator: str = "_"
 
     model_config = SettingsConfigDict(
         env_file=DOTENV_PATH,
@@ -37,7 +41,7 @@ class Settings(BaseSettings):
 
     @field_validator("images_dir", mode="before")
     @classmethod
-    def correct_path(cls, path):
+    def correct_path(cls, path: str):
         if path is None:
             raise ValueError("Define 'IMAGES_DIR' in .env file.")
         if ":\\" in str(path):
@@ -50,6 +54,13 @@ class Settings(BaseSettings):
                 f"Ensure defined 'IMAGES_DIR' is a directory. Current value: {path}."
             )
         return path
+
+    @field_validator("project_name", mode="before")
+    @classmethod
+    def validate_project_name(cls, project_name: str):
+        if project_name is None:
+            raise ValueError("Define 'PROJECT_NAME' in .env file.")
+        return project_name
 
 
 settings = Settings()
