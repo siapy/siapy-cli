@@ -41,7 +41,7 @@ class Settings(BaseSettings):
 
     @field_validator("images_dir", mode="before")
     @classmethod
-    def correct_path(cls, path: str):
+    def correct_path(cls, path: str | Path):
         if path is None:
             raise ValueError("Define 'IMAGES_DIR' in .env file.")
         if ":\\" in str(path):

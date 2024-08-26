@@ -37,3 +37,17 @@ def extract_labels_from_spectral_image(image: SpectralImage) -> list[str]:
     return image.filepath.name.split(settings.labels_part_deliminator)[0].split(
         settings.labels_between_deliminator
     )
+
+
+def extract_labels_from_spectral_images(
+    image_set_cam1: list[SpectralImage],
+    image_set_cam2: list[SpectralImage],
+) -> tuple[list[list[str]], list[list[str]]]:
+    labels_cam1 = [
+        extract_labels_from_spectral_image(image) for image in image_set_cam1
+    ]
+    labels_cam2 = [
+        extract_labels_from_spectral_image(image) for image in image_set_cam2
+    ]
+
+    return labels_cam1, labels_cam2
