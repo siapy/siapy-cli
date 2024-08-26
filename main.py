@@ -1,16 +1,18 @@
+import json
+from typing import Optional
+
 import typer
+from pydantic.json import pydantic_encoder
 
 from source.core import logger, settings
-from source.misc.check_images import check_spectral_images
-from source.misc.display_image import display_spectral_image
+from source.misc import check_spectral_images, display_spectral_image
 
 app = typer.Typer()
 
 
 @app.command()
-def main(name: str, lastname: str):
-    logger.debug(settings)
-    print(f"Hello {name} {lastname}")
+def display_settings():
+    logger.info(json.dumps(settings.model_dump(), default=pydantic_encoder, indent=4))
 
 
 @app.command()
@@ -19,8 +21,8 @@ def check_images():
 
 
 @app.command()
-def display_image(image_name: str):
-    display_spectral_image()
+def display_image(image_name: Optional[str] = None):
+    display_spectral_image(image_name)
 
 
 if __name__ == "__main__":
