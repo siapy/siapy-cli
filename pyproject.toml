@@ -17,6 +17,10 @@ license = { text = "MIT" }
 [tool.pdm]
 distribution = false
 
+[tool.pdm.scripts]
+siapy-lib.cmd = "main.py"
+siapy-lib.env_file.override = ".env"
+
 [tool.pdm.dev-dependencies]
 lint = ["ruff>=0.4.8", "mypy>=1.10.1", "pandas-stubs>=2.2.2.240603"]
 dev = ["pre-commit>=3.7.1", "tomli>=2.0.1", "codespell>=2.3.0"]
