@@ -1,4 +1,9 @@
-from .artifacts import load_transformation_matrix, save_transformation_matrix
+from .artifacts import (
+    load_selected_areas,
+    load_transformation_matrix,
+    save_selected_areas,
+    save_transformation_matrix,
+)
 from .helpers import (
     extract_labels_from_spectral_image,
     extract_labels_from_spectral_images,
@@ -13,4 +18,6 @@ __all__ = [
     "save_transformation_matrix",
     "load_transformation_matrix",
     "get_images_by_label",
+    "save_selected_areas",
+    "load_selected_areas",
 ]
