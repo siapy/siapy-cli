@@ -5,7 +5,9 @@ import typer
 from pydantic.json import pydantic_encoder
 
 from source.core import logger, settings
+from source.helpers import save_transformation_matrix
 from source.misc import check_spectral_images, display_spectral_image
+from source.transformator import find_transformation_between_images
 
 app = typer.Typer()
 
@@ -21,8 +23,14 @@ def check_images():
 
 
 @app.command()
-def display_image(image_name: Optional[str] = None):
-    display_spectral_image(image_name)
+def display_image(label: Optional[str] = None):
+    display_spectral_image(label)
+
+
+@app.command()
+def calculate_transformation(label: str):
+    matx = find_transformation_between_images(label)
+    save_transformation_matrix(matx)
 
 
 if __name__ == "__main__":

@@ -9,8 +9,8 @@ from source.helpers import extract_labels_from_spectral_images, read_spectral_im
 def display_spectral_image(label: Optional[str] = None):
     image_set_cam1, image_set_cam2 = read_spectral_images()
 
-    if not image_set_cam1:
-        raise ValueError("Image set is empty")
+    if not image_set_cam1 or not image_set_cam2:
+        raise ValueError("Image set is empty. Ensure images are loaded first.")
 
     if not label:
         image_cam1 = image_set_cam1[0]

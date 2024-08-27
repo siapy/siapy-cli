@@ -7,7 +7,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 DOTENV_PATH = ".env"
 
 BASE_DIR = Path(__file__).parent.parent.parent.absolute()
-SAVED_DIR = BASE_DIR / "saved"
+SAVED_DIR = BASE_DIR / "artifacts"
 
 SAVED_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -21,6 +21,10 @@ class Settings(BaseSettings):
     )
     images_dir: Path = Field(
         default=None, description="Path to spectral images directory."
+    )
+    artifacts_dir: Path = Field(
+        default=SAVED_DIR,
+        description="Path to program artifacts directory. Currently cannot be changed.",
     )
     debug: bool = Field(
         default=False, description="If logging displays debug information."
