@@ -7,7 +7,7 @@ from pydantic.json import pydantic_encoder
 from source.core import logger, settings
 from source.helpers import save_transformation_matrix
 from source.misc import check_spectral_images, display_spectral_image
-from source.transformator import find_transformation_between_images
+from source.processing import find_transformation_between_images
 
 app = typer.Typer()
 

@@ -32,3 +32,4 @@ def find_transformation_between_images(label: str) -> np.ndarray:
     logger.info("Transformation matrix calculated")
     # pixels_transformed = corregistrator.transform(pixels_cam1, matx)
     return matx
+
