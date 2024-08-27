@@ -13,13 +13,19 @@ requires-python = "==3.10.*"
 readme = "README.md"
 license = { text = "MIT" }
 
+[project.scripts]
+siapy-cli = "main:app"
 
 [tool.pdm]
-distribution = false
+distribution = true
 
 [tool.pdm.scripts]
-siapy-lib.cmd = "main.py"
-siapy-lib.env_file.override = ".env"
+siapy-cli.cmd = "main.py"
+siapy-cli.env_file.override = ".env"
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
 
 [tool.pdm.dev-dependencies]
 lint = ["ruff>=0.4.8", "mypy>=1.10.1", "pandas-stubs>=2.2.2.240603"]
