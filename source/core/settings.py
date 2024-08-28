@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -48,8 +49,12 @@ class Settings(BaseSettings):
     def correct_path(cls, path: str | Path):
         if path is None:
             raise ValueError("Define 'IMAGES_DIR' in .env file.")
-        if ":\\" in str(path):
-            path = str(path).replace("F:\\", "/mnt/f/").replace("\\", "/")
+        path = str(path)
+        # If the os is run as wsl (windows subsystem for linux)
+        if ":\\" in path:
+            path = re.sub(
+                r"([A-Za-z]):\\", lambda m: f"/mnt/{m.group(1).lower()}/", path
+            ).replace("\\", "/")
             if path.startswith('r"') and path.endswith('"'):
                 path = path[2:-1]
         path = Path(path)
