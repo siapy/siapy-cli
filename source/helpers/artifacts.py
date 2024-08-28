@@ -39,8 +39,7 @@ def save_selected_areas(selected_areas: list[Pixels], category: str, label: str)
     category_areas_dir.mkdir(parents=True, exist_ok=True)
     logger.info("Saving selected areas to: %s" % category_areas_dir)
     for idx, area in enumerate(selected_areas):
-        with open(category_areas_dir / f"{idx}.pkl", "wb") as f:
-            pickle.dump(area.df, f)
+        area.save_to_parquet(category_areas_dir / f"{idx}.parquet")
 
 
 def load_selected_areas(category: str) -> list[Pixels]:
@@ -55,8 +54,7 @@ def load_selected_areas(category: str) -> list[Pixels]:
     labels = category_areas_dir.glob("*")
     for label in labels:
         category_areas_dir_ = category_areas_dir / label.stem
-        for area_file in sorted(category_areas_dir_.glob("*.pkl")):
-            with open(area_file, "rb") as f:
-                area_df = pickle.load(f)
-                selected_areas.append(Pixels(area_df))
+        for area_file in sorted(category_areas_dir_.glob("*.parquet")):
+            area_df = Pixels.load_from_parquet(area_file)
+            selected_areas.append(area_df)
     return selected_areas
