@@ -12,8 +12,10 @@ from source.core import logger, settings
 _TRANSFORMATION_MATX_FILENAME = settings.artifacts_dir / "transform/matx.pkl"
 _SELECTED_AREAS_DIR = settings.artifacts_dir / "areas"
 _MODEL_DIR = settings.artifacts_dir / "model"
-_MODEL_CLF_FILENAME = _MODEL_DIR / "model.json"
-_MODEL_ENCODER_FILENAME = _MODEL_DIR / "encoder.pkl"
+_MODEL_CLF_FILENAMEM_CAM1 = _MODEL_DIR / "model_cam1.json"
+_MODEL_ENCODER_FILENAME_CAM1 = _MODEL_DIR / "encoder_cam1.pkl"
+_MODEL_CLF_FILENAMEM_CAM2 = _MODEL_DIR / "model_cam2.json"
+_MODEL_ENCODER_FILENAME_CAM2 = _MODEL_DIR / "encoder_cam2.pkl"
 
 
 def save_transformation_matrix(matx: np.ndarray):
@@ -74,25 +76,53 @@ def load_all_selected_areas() -> dict[str, dict[str, list[Pixels]]]:
     }
 
 
-def save_model(encoder: LabelEncoder, model: XGBClassifier):
+def save_model(
+    encoder_cam1: LabelEncoder,
+    model_cam1: XGBClassifier,
+    encoder_cam2: LabelEncoder,
+    model_cam2: XGBClassifier,
+):
     _MODEL_DIR.mkdir(parents=True, exist_ok=True)
-    model.save_model(_MODEL_CLF_FILENAME)
-    with open(_MODEL_ENCODER_FILENAME, "wb") as f:
-        pickle.dump(encoder, f)
-    logger.info("Model saved.")
+    model_cam1.save_model(_MODEL_CLF_FILENAMEM_CAM1)
+    with open(_MODEL_ENCODER_FILENAME_CAM1, "wb") as f:
+        pickle.dump(encoder_cam1, f)
+    logger.info("Model saved for camera 1.")
+
+    model_cam2.save_model(_MODEL_CLF_FILENAMEM_CAM2)
+    with open(_MODEL_ENCODER_FILENAME_CAM2, "wb") as f:
+        pickle.dump(encoder_cam2, f)
+    logger.info("Model saved for camera 2.")
 
     # load_model()
 
 
-def load_model() -> tuple[LabelEncoder, XGBClassifier]:
-    if not _MODEL_CLF_FILENAME.exists() or not _MODEL_ENCODER_FILENAME.exists():
-        raise FileNotFoundError("Model files not found.")
+def load_model() -> tuple[LabelEncoder, XGBClassifier, LabelEncoder, XGBClassifier]:
+    if (
+        not _MODEL_CLF_FILENAMEM_CAM1.exists()
+        or not _MODEL_ENCODER_FILENAME_CAM1.exists()
+    ):
+        raise FileNotFoundError("Model files not found for camera 1.")
 
-    model = XGBClassifier()
-    model.load_model(_MODEL_CLF_FILENAME)
+    model_cam1 = XGBClassifier()
+    model_cam1.load_model(_MODEL_CLF_FILENAMEM_CAM1)
 
-    with open(_MODEL_ENCODER_FILENAME, "rb") as f:
-        encoder = pickle.load(f)
+    with open(_MODEL_ENCODER_FILENAME_CAM1, "rb") as f:
+        encoder_cam1 = pickle.load(f)
 
-    logger.info("Model loaded.")
-    return encoder, model
+    logger.info("Model loaded for camera 1.")
+
+    if (
+        not _MODEL_CLF_FILENAMEM_CAM2.exists()
+        or not _MODEL_ENCODER_FILENAME_CAM2.exists()
+    ):
+        raise FileNotFoundError("Model files not found for camera 2.")
+
+    model_cam2 = XGBClassifier()
+    model_cam2.load_model(_MODEL_CLF_FILENAMEM_CAM2)
+
+    with open(_MODEL_ENCODER_FILENAME_CAM2, "rb") as f:
+        encoder_cam2 = pickle.load(f)
+
+    logger.info("Model loaded for camera 2.")
+
+    return encoder_cam1, model_cam1, encoder_cam2, model_cam2

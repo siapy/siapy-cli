@@ -59,9 +59,13 @@ def select_areas(label: str, category: str):
 @app.command()
 def train_model():
     selected_areas = load_all_selected_areas()
-    X, y = convert_selected_areas_to_train_data(selected_areas)
-    encoder, model = train_xgboost_model(X, y)
-    save_model(encoder, model)
+    matx = load_transformation_matrix()
+    X_cam1, y_cam1, X_cam2, y_cam2 = convert_selected_areas_to_train_data(
+        selected_areas, matx
+    )
+    encoder_cam1, model_cam1 = train_xgboost_model(X_cam1, y_cam1)
+    encoder_cam2, model_cam2 = train_xgboost_model(X_cam2, y_cam2)
+    save_model(encoder_cam1, model_cam1, encoder_cam2, model_cam2)
 
 
 if __name__ == "__main__":
