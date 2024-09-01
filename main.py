@@ -5,9 +5,18 @@ import typer
 from pydantic.json import pydantic_encoder
 
 from source.core import logger, settings
-from source.helpers import save_selected_areas, save_transformation_matrix
+from source.helpers import (
+    load_all_selected_areas,
+    save_model,
+    save_selected_areas,
+    save_transformation_matrix,
+)
 from source.misc import check_spectral_images, display_spectral_image
-from source.processing import find_transformation_between_images, select_areas_on_images
+from source.processing import (
+    find_transformation_between_images,
+    select_areas_on_images,
+    train_xgboost_model,
+)
 
 app = typer.Typer()
 
@@ -37,6 +46,13 @@ def calculate_transformation(label: str):
 def select_areas(label: str, category: str):
     selected_areas = select_areas_on_images(label)
     save_selected_areas(selected_areas, category, label)
+
+
+@app.command()
+def train_model():
+    selected_areas = load_all_selected_areas()
+    encoder, model = train_xgboost_model(selected_areas)
+    save_model(encoder, model)
 
 
 if __name__ == "__main__":

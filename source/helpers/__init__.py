@@ -1,6 +1,9 @@
 from .artifacts import (
+    load_all_selected_areas,
+    load_model,
     load_selected_areas,
     load_transformation_matrix,
+    save_model,
     save_selected_areas,
     save_transformation_matrix,
 )
@@ -20,4 +23,7 @@ __all__ = [
     "get_images_by_label",
     "save_selected_areas",
     "load_selected_areas",
+    "load_all_selected_areas",
+    "save_model",
+    "load_model",
 ]
