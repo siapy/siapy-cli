@@ -1,6 +1,5 @@
 from siapy.entities import Pixels
 from siapy.utils.plots import (
-    display_image_with_areas,
     pixels_select_lasso,
 )
 
@@ -22,5 +21,4 @@ def select_areas_on_images(label: str) -> list[Pixels]:
     )
     selected_areas = pixels_select_lasso(image_cam1)
     logger.info(f"Selected '{len(selected_areas)}' areas")
-    display_image_with_areas(image_cam1, selected_areas)
     return selected_areas

@@ -7,11 +7,16 @@ from pydantic.json import pydantic_encoder
 from source.core import logger, settings
 from source.helpers import (
     load_all_selected_areas,
+    load_transformation_matrix,
     save_model,
     save_selected_areas,
     save_transformation_matrix,
 )
-from source.misc import check_spectral_images, display_spectral_image
+from source.misc import (
+    check_spectral_images,
+    display_spectral_image,
+    display_spectral_images_with_areas,
+)
 from source.processing import (
     convert_selected_areas_to_train_data,
     find_transformation_between_images,
@@ -46,6 +51,8 @@ def calculate_transformation(label: str):
 @app.command()
 def select_areas(label: str, category: str):
     selected_areas = select_areas_on_images(label)
+    matx = load_transformation_matrix()
+    display_spectral_images_with_areas(label, selected_areas, matx)
     save_selected_areas(selected_areas, category, label)
 
 
