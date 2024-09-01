@@ -1,3 +1,4 @@
+import numpy as np
 from siapy.entities import Pixels
 from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBClassifier
@@ -10,9 +11,9 @@ from source.helpers import (
 )
 
 
-def train_xgboost_model(
+def convert_selected_areas_to_train_data(
     selected_areas: dict[str, dict[str, list[Pixels]]],
-) -> tuple[LabelEncoder,XGBClassifier]:
+) -> tuple[list[np.ndarray], list[str]]:
     image_set_cam1, image_set_cam2 = read_spectral_images()
     labels_cam1, labels_cam2 = extract_labels_from_spectral_images(
         image_set_cam1, image_set_cam2
@@ -29,7 +30,12 @@ def train_xgboost_model(
                 signal_mean = siagnatures.signals.mean()
                 X.append(signal_mean)
                 y.append(category)
+    return X, y
 
+
+def train_xgboost_model(
+    X: list[np.ndarray], y: list[str]
+) -> tuple[LabelEncoder, XGBClassifier]:
     encoder = LabelEncoder()
     y_encoded = encoder.fit_transform(y)
     model = XGBClassifier().fit(X, y_encoded)

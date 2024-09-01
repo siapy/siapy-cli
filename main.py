@@ -13,6 +13,7 @@ from source.helpers import (
 )
 from source.misc import check_spectral_images, display_spectral_image
 from source.processing import (
+    convert_selected_areas_to_train_data,
     find_transformation_between_images,
     select_areas_on_images,
     train_xgboost_model,
@@ -51,7 +52,8 @@ def select_areas(label: str, category: str):
 @app.command()
 def train_model():
     selected_areas = load_all_selected_areas()
-    encoder, model = train_xgboost_model(selected_areas)
+    X, y = convert_selected_areas_to_train_data(selected_areas)
+    encoder, model = train_xgboost_model(X, y)
     save_model(encoder, model)
 
 
