@@ -2,10 +2,10 @@ from typing import Optional
 
 import numpy as np
 from matplotlib import pyplot as plt
-from siapy.entities import Pixels, SpectralImage
+from siapy.entities import Pixels
 from siapy.transformations import corregistrator
 from siapy.utils.plots import (
-    display_image_with_areas,
+    display_multiple_images_with_areas,
 )
 
 from source.core import logger, settings
@@ -57,5 +57,10 @@ def display_spectral_images_with_areas(
         corregistrator.transform(pixels_cam1, transformation_matx)
         for pixels_cam1 in selected_areas_cam1
     ]
-    display_image_with_areas(image_cam1, selected_areas_cam1)
-    display_image_with_areas(image_cam2, selected_areas_cam2)
+    display_multiple_images_with_areas(
+        [
+            (image_cam1, selected_areas_cam1),
+            (image_cam2, selected_areas_cam2),
+        ],
+        plot_interactive_buttons=False,
+    )
