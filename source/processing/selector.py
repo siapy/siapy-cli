@@ -16,7 +16,7 @@ def select_areas_on_images(label: str) -> list[Pixels]:
     labels_cam1, labels_cam2 = extract_labels_from_spectral_images(
         image_set_cam1, image_set_cam2
     )
-    image_cam1, _ = get_images_by_label(
+    image_cam1, _, _, _ = get_images_by_label(
         label, image_set_cam1, image_set_cam2, labels_cam1, labels_cam2
     )
     selected_areas = pixels_select_lasso(image_cam1)

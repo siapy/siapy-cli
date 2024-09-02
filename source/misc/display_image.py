@@ -30,7 +30,7 @@ def display_spectral_image(label: Optional[str] = None):
         labels_cam1, labels_cam2 = extract_labels_from_spectral_images(
             image_set_cam1, image_set_cam2
         )
-        image_cam1, image_cam2 = get_images_by_label(
+        image_cam1, image_cam2, _, _ = get_images_by_label(
             label, image_set_cam1, image_set_cam2, labels_cam1, labels_cam2
         )
 
@@ -49,7 +49,7 @@ def display_spectral_images_with_areas(
     labels_cam1, labels_cam2 = extract_labels_from_spectral_images(
         image_set_cam1, image_set_cam2
     )
-    image_cam1, image_cam2 = get_images_by_label(
+    image_cam1, image_cam2, _, _ = get_images_by_label(
         label, image_set_cam1, image_set_cam2, labels_cam1, labels_cam2
     )
 

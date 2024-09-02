@@ -26,7 +26,7 @@ def convert_selected_areas_to_train_data(
     y_cam2 = []
     for category, data in selected_areas.items():
         for label, pixels_list in data.items():
-            image_cam1, image_cam2 = get_images_by_label(
+            image_cam1, image_cam2, _, _ = get_images_by_label(
                 label, image_set_cam1, image_set_cam2, labels_cam1, labels_cam2
             )
             for pixels_cam1 in pixels_list:

@@ -21,7 +21,7 @@ def find_transformation_between_images(label: str) -> np.ndarray:
     labels_cam1, labels_cam2 = extract_labels_from_spectral_images(
         image_set_cam1, image_set_cam2
     )
-    image_cam1, image_cam2 = get_images_by_label(
+    image_cam1, image_cam2, _, _ = get_images_by_label(
         label, image_set_cam1, image_set_cam2, labels_cam1, labels_cam2
     )
 
@@ -32,4 +32,3 @@ def find_transformation_between_images(label: str) -> np.ndarray:
     logger.info("Transformation matrix calculated")
     # pixels_transformed = corregistrator.transform(pixels_cam1, matx)
     return matx
-

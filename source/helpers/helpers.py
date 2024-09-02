@@ -59,7 +59,7 @@ def get_images_by_label(
     image_set_cam2: list[SpectralImage],
     labels_cam1: list[list[str]],
     labels_cam2: list[list[str]],
-) -> tuple[SpectralImage, SpectralImage]:
+) -> tuple[SpectralImage, SpectralImage, int, int]:
     index_cam1 = -1
     index_cam2 = -1
     for idx, labels_list in enumerate(labels_cam1):
@@ -82,4 +82,4 @@ def get_images_by_label(
     logger.info(f"Extracted images for label: '{label}'")
     logger.info(f"Camera1 image path: '{image_cam1.filepath}'")
     logger.info(f"Camera2 image path: '{image_cam2.filepath}'")
-    return image_cam1, image_cam2
+    return image_cam1, image_cam2, index_cam1, index_cam2
