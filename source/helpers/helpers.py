@@ -72,9 +72,9 @@ def get_images_by_label(
             break
 
     if index_cam1 == -1:
-        raise ValueError(f"Label for '{settings.camera1_id}' was not found.")
+        raise ValueError(f"Label for '{label}' was not found for camera 1.")
     if index_cam2 == -1:
-        raise ValueError(f"Label for '{settings.camera2_id}' was not found.")
+        raise ValueError(f"Label for '{label}' was not found for camera 2.")
 
     image_cam1 = image_set_cam1[index_cam1]
     image_cam2 = image_set_cam2[index_cam2]
