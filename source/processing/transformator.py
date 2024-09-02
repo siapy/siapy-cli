@@ -1,5 +1,4 @@
 import numpy as np
-from siapy.entities.imagesets import SpectralImage
 from siapy.transformations import corregistrator
 from siapy.utils.plots import pixels_select_click
 
@@ -32,4 +31,3 @@ def find_transformation_between_images(label: str) -> np.ndarray:
     logger.info("Transformation matrix calculated")
     # pixels_transformed = corregistrator.transform(pixels_cam1, matx)
     return matx
-

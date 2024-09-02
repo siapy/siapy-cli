@@ -2,13 +2,12 @@ from typing import Optional
 
 import numpy as np
 from matplotlib import pyplot as plt
-from siapy.entities import Pixels, SpectralImage
+from siapy.entities import Pixels
 from siapy.transformations import corregistrator
 from siapy.utils.plots import (
     display_image_with_areas,
 )
 
-from source.core import logger, settings
 from source.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
