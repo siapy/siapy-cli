@@ -7,6 +7,7 @@ from pydantic.json import pydantic_encoder
 from source.core import logger, settings
 from source.helpers import (
     load_all_selected_areas,
+    load_model,
     load_transformation_matrix,
     save_model,
     save_selected_areas,
@@ -20,6 +21,7 @@ from source.misc import (
 from source.processing import (
     convert_selected_areas_to_train_data,
     find_transformation_between_images,
+    perform_segmentation,
     select_areas_on_images,
     train_xgboost_model,
 )
@@ -66,6 +68,20 @@ def train_model():
     encoder_cam1, model_cam1 = train_xgboost_model(X_cam1, y_cam1)
     encoder_cam2, model_cam2 = train_xgboost_model(X_cam2, y_cam2)
     save_model(encoder_cam1, model_cam1, encoder_cam2, model_cam2)
+
+
+@app.command()
+def segment_images(label: Optional[str] = None):
+    encoder_cam1, model_cam1, encoder_cam2, model_cam2 = load_model()
+    matx = load_transformation_matrix()
+    perform_segmentation(
+        encoder_cam1,
+        model_cam1,
+        encoder_cam2,
+        model_cam2,
+        matx,
+        label,
+    )
 
 
 if __name__ == "__main__":
