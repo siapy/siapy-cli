@@ -1,4 +1,8 @@
+import time
+
 import numpy as np
+from rich.progress import track
+from siapy.entities import Pixels, SpectralImage
 from siapy.transformations import corregistrator
 from siapy.utils.enums import InteractiveButtonsEnum
 from siapy.utils.plots import (
@@ -6,6 +10,7 @@ from siapy.utils.plots import (
     pixels_select_lasso,
 )
 from sklearn.preprocessing import LabelEncoder
+from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
 from source.core import logger, settings
@@ -23,6 +28,55 @@ def _handle_out_flag(out_flag: InteractiveButtonsEnum | None, index: int) -> int
         return index
     else:
         return index + 1
+
+
+def make_predictions(
+    encoder_cam1: LabelEncoder,
+    model_cam1: XGBClassifier,
+    encoder_cam2: LabelEncoder,
+    model_cam2: XGBClassifier,
+    image_cam1: SpectralImage,
+    image_cam2: SpectralImage,
+    selected_areas_cam1: list[Pixels],
+    selected_areas_cam2: list[Pixels],
+) -> tuple[list[Pixels], list[Pixels]]:
+    # Iterate from 1: to exclude reference panel from segmenting
+    selected_areas_cam1_out = [selected_areas_cam1[0]]
+    selected_areas_cam2_out = [selected_areas_cam2[0]]
+
+    logger.info("Segmentation started ...")
+    # Segment for camera 1
+    start_time_cam1 = time.time()
+    for idx, area in enumerate(
+        track(selected_areas_cam1[1:], description="Processing Camera 1 Areas...")
+    ):
+        signals = image_cam1.to_signatures(area).signals.to_numpy()
+        y_pred = encoder_cam1.inverse_transform(model_cam1.predict(signals))
+        mask = y_pred == settings.classification_category_keep
+        area_filtered = area.df.iloc[mask].reset_index(drop=True)
+        selected_areas_cam1_out.append(Pixels.from_iterable(area_filtered))
+    end_time_cam1 = time.time()
+    logger.info(
+        f"Time taken for Camera 1 segmentation: {end_time_cam1 - start_time_cam1:.2f} seconds"
+    )
+
+    # Segment for camera 2
+    start_time_cam2 = time.time()
+    for idx, area in enumerate(
+        track(selected_areas_cam2[1:], description="Processing Camera 2 Areas...")
+    ):
+        signals = image_cam2.to_signatures(area).signals.to_numpy()
+        y_pred = encoder_cam2.inverse_transform(model_cam2.predict(signals))
+        mask = y_pred == settings.classification_category_keep
+        area_filtered = area.df.iloc[mask].reset_index(drop=True)
+        selected_areas_cam2_out.append(Pixels.from_iterable(area_filtered))
+    end_time_cam2 = time.time()
+    logger.info(
+        f"Time taken for Camera 2 segmentation: {end_time_cam2 - start_time_cam2:.2f} seconds"
+    )
+    logger.info(f"Total segmentation time: {end_time_cam2 - start_time_cam1} seconds")
+
+    return selected_areas_cam1_out, selected_areas_cam2_out
 
 
 def perform_segmentation(
@@ -61,6 +115,16 @@ def perform_segmentation(
             corregistrator.transform(pixels_cam1, transformation_matx)
             for pixels_cam1 in selected_areas_cam1
         ]
+        selected_areas_cam1, selected_areas_cam2 = make_predictions(
+            encoder_cam1,
+            model_cam1,
+            encoder_cam2,
+            model_cam2,
+            image_cam1,
+            image_cam2,
+            selected_areas_cam1,
+            selected_areas_cam2,
+        )
 
         out_flag = display_multiple_images_with_areas(
             [
@@ -70,3 +134,6 @@ def perform_segmentation(
         )
         logger.info(f"Enumerate flag: '{out_flag}'")
         index = _handle_out_flag(out_flag, index)
+
+        if out_flag is InteractiveButtonsEnum.SAVE:
+            logger.info("Saving images ...")
