@@ -1617,7 +1617,7 @@ files = [
 
 [[package]]
 name = "siapy"
-version = "0.5.1"
+version = "0.5.2"
 requires_python = ">=3.10"
 summary = "A python library for efficient processing of spectral images."
 groups = ["default"]
@@ -1638,8 +1638,8 @@ dependencies = [
     "spyndex>=0.6.0",
 ]
 files = [
-    {file = "siapy-0.5.1-py3-none-any.whl", hash = "sha256:68d19ba550bc4d66b1ad04260ffe72945b7c1995ea529d829db338e683e4ed59"},
-    {file = "siapy-0.5.1.tar.gz", hash = "sha256:0c51021420cd1b7217cb59585d31fe7b707771e95b3446ff5c1fdcb8d38f1490"},
+    {file = "siapy-0.5.2-py3-none-any.whl", hash = "sha256:b5e1c0e5ed449e4846290d842f71634a22bb5566734d084d899f201d59812ca7"},
+    {file = "siapy-0.5.2.tar.gz", hash = "sha256:0e48b35ee8fb6a79a0cf03289eb807dc14c8d55988ec5bce0e85fcddf188ed27"},
 ]
 
 [[package]]
