@@ -1,5 +1,4 @@
 import numpy as np
-from siapy.entities.imagesets import SpectralImage
 from siapy.transformations import corregistrator
 from siapy.utils.plots import pixels_select_click
 

@@ -8,7 +8,6 @@ from siapy.utils.plots import (
     display_multiple_images_with_areas,
 )
 
-from source.core import logger, settings
 from source.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
