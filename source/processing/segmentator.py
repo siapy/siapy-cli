@@ -148,6 +148,10 @@ def perform_segmentation(
             corregistrator.transform(pixels_cam1, transformation_matx)
             for pixels_cam1 in selected_areas_cam1
         ]
+        if not selected_areas_cam1 or not selected_areas_cam2:
+            logger.warning("No areas were selected. Repeating ...")
+            continue
+
         selected_areas_cam1, selected_areas_cam2 = make_predictions(
             encoder_cam1,
             model_cam1,
