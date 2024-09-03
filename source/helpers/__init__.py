@@ -5,6 +5,7 @@ from .artifacts import (
     load_transformation_matrix,
     save_model,
     save_selected_areas,
+    save_spectral_image,
     save_transformation_matrix,
 )
 from .helpers import (
@@ -26,4 +27,5 @@ __all__ = [
     "load_all_selected_areas",
     "save_model",
     "load_model",
+    "save_spectral_image",
 ]

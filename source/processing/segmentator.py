@@ -10,7 +10,6 @@ from siapy.utils.plots import (
     pixels_select_lasso,
 )
 from sklearn.preprocessing import LabelEncoder
-from sklearn.svm import SVC
 from xgboost import XGBClassifier
 
 from source.core import logger, settings
@@ -18,6 +17,7 @@ from source.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
     read_spectral_images,
+    save_spectral_image,
 )
 
 
@@ -74,9 +74,42 @@ def make_predictions(
     logger.info(
         f"Time taken for Camera 2 segmentation: {end_time_cam2 - start_time_cam2:.2f} seconds"
     )
-    logger.info(f"Total segmentation time: {end_time_cam2 - start_time_cam1} seconds")
+    logger.info(
+        f"Total segmentation time: {end_time_cam2 - start_time_cam1:.2f} seconds"
+    )
 
     return selected_areas_cam1_out, selected_areas_cam2_out
+
+
+def save_segmented_images(
+    index: int,
+    image_cam1: SpectralImage,
+    image_cam2: SpectralImage,
+    selected_areas_cam1: list[Pixels],
+    selected_areas_cam2: list[Pixels],
+):
+    filename_cam1 = image_cam1.filepath.stem
+    filename_cam2 = image_cam2.filepath.stem
+
+    logger.info("Saving segmented images for Camera 1 ...")
+    for idx, area in enumerate(selected_areas_cam1):
+        filename_widx = (
+            f"{index}{settings.labels_between_deliminator}"
+            f"{idx}{settings.labels_part_deliminator}"
+            f"{filename_cam1}.hdr"
+        )
+        subarray = image_cam1.to_subarray(area)
+        save_spectral_image(subarray, filename_widx)
+
+    logger.info("Saving segmented images for Camera 2 ...")
+    for idx, area in enumerate(selected_areas_cam2):
+        filename_widx = (
+            f"{index}{settings.labels_between_deliminator}"
+            f"{idx}{settings.labels_part_deliminator}"
+            f"{filename_cam2}.hdr"
+        )
+        subarray = image_cam2.to_subarray(area)
+        save_spectral_image(subarray, filename_widx)
 
 
 def perform_segmentation(
@@ -132,8 +165,15 @@ def perform_segmentation(
                 (image_cam2, selected_areas_cam2),
             ]
         )
-        logger.info(f"Enumerate flag: '{out_flag}'")
-        index = _handle_out_flag(out_flag, index)
 
         if out_flag is InteractiveButtonsEnum.SAVE:
             logger.info("Saving images ...")
+            save_segmented_images(
+                index,
+                image_cam1,
+                image_cam2,
+                selected_areas_cam1,
+                selected_areas_cam2,
+            )
+
+        index = _handle_out_flag(out_flag, index)

@@ -1,9 +1,11 @@
 import os
 import pickle
 import shutil
+from pathlib import Path
 
 import numpy as np
 from siapy.entities import Pixels
+from siapy.utils.images import save_image
 from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBClassifier
 
@@ -16,6 +18,8 @@ _MODEL_CLF_FILENAMEM_CAM1 = _MODEL_DIR / "model_cam1.json"
 _MODEL_ENCODER_FILENAME_CAM1 = _MODEL_DIR / "encoder_cam1.pkl"
 _MODEL_CLF_FILENAMEM_CAM2 = _MODEL_DIR / "model_cam2.json"
 _MODEL_ENCODER_FILENAME_CAM2 = _MODEL_DIR / "encoder_cam2.pkl"
+_IMAGE_DIR = settings.artifacts_dir / "images"
+_IMAGE_SELECTED_AREAS_DIR = _IMAGE_DIR / "areas"
 
 
 def save_transformation_matrix(matx: np.ndarray):
@@ -126,3 +130,8 @@ def load_model() -> tuple[LabelEncoder, XGBClassifier, LabelEncoder, XGBClassifi
     logger.info("Model loaded for camera 2.")
 
     return encoder_cam1, model_cam1, encoder_cam2, model_cam2
+
+
+def save_spectral_image(image: np.ndarray, filename: str):
+    _IMAGE_SELECTED_AREAS_DIR.mkdir(parents=True, exist_ok=True)
+    save_image(image, _IMAGE_SELECTED_AREAS_DIR / filename)
