@@ -1,7 +1,6 @@
 import os
 import pickle
 import shutil
-from pathlib import Path
 
 import numpy as np
 from siapy.entities import Pixels
