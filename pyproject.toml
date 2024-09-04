@@ -21,7 +21,7 @@ siapy-cli = "main:app"
 distribution = true
 
 [tool.pdm.build]
-source-includes = ["source/"]
+source-includes = ["source/", "main.py"]
 
 [tool.pdm.scripts]
 siapy-cli.cmd = "main.py"
@@ -50,6 +50,7 @@ ignore_missing_imports = true
 extend-exclude = []
 exclude = []
 lint.ignore = ["F811"]
+src = ["source/", "main.py"]
 
 [tool.codespell]
 ignore-words-list = "janezlapajne"
