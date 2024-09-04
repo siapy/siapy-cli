@@ -1,5 +1,5 @@
 [project]
-name = "spectral-images-segmentator"
+name = "cli"
 version = "0.1.0"
 description = "Effortlessly segment spectral images using the siapy package."
 authors = [{ name = "janezlapajne", email = "janez.lapajne@kis.si" }]
@@ -19,6 +19,9 @@ siapy-cli = "main:app"
 
 [tool.pdm]
 distribution = true
+
+[tool.pdm.build]
+source-includes = ["source/"]
 
 [tool.pdm.scripts]
 siapy-cli.cmd = "main.py"
