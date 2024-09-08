@@ -90,8 +90,18 @@ def save_segmented_images(
 ):
     filename_cam1 = image_cam1.filepath.stem
     filename_cam2 = image_cam2.filepath.stem
+    meta_keys_to_extract = [
+        "description",
+        "data type",
+        "data ignore value",
+        "interleave",
+        "default bands",
+        "byte order",
+        "wavelength",
+    ]
 
     logger.info("Saving segmented images for Camera 1 ...")
+    metadata_cam1 = {key: image_cam1.metadata[key] for key in meta_keys_to_extract}
     for idx, area in enumerate(selected_areas_cam1):
         filename_widx = (
             f"{index}{settings.labels_between_deliminator}"
@@ -99,9 +109,10 @@ def save_segmented_images(
             f"{filename_cam1}.hdr"
         )
         subarray = image_cam1.to_subarray(area)
-        save_spectral_image(subarray, filename_widx)
+        save_spectral_image(subarray, filename_widx, metadata_cam1)
 
     logger.info("Saving segmented images for Camera 2 ...")
+    metadata_cam2 = {key: image_cam2.metadata[key] for key in meta_keys_to_extract}
     for idx, area in enumerate(selected_areas_cam2):
         filename_widx = (
             f"{index}{settings.labels_between_deliminator}"
@@ -109,7 +120,7 @@ def save_segmented_images(
             f"{filename_cam2}.hdr"
         )
         subarray = image_cam2.to_subarray(area)
-        save_spectral_image(subarray, filename_widx)
+        save_spectral_image(subarray, filename_widx, metadata_cam2)
 
 
 def perform_segmentation(

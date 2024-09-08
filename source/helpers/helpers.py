@@ -5,9 +5,13 @@ from siapy.entities.imagesets import SpectralImage, SpectralImageSet
 from source.core import logger, settings
 
 
-def read_spectral_images() -> tuple[list[SpectralImage], list[SpectralImage]]:
+def read_spectral_images(
+    images_dir: Path | str | None = None,
+) -> tuple[list[SpectralImage], list[SpectralImage]]:
+    if images_dir is None:
+        images_dir = settings.images_dir
     file_paths = sorted(
-        [Path(file) for file in Path(settings.images_dir).glob("*") if file.is_file()]
+        [Path(file) for file in Path(images_dir).glob("*") if file.is_file()]
     )
 
     header_paths = [
