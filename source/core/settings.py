@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     labels_part_deliminator: str = "__"
     labels_between_deliminator: str = "_"
     classification_category_keep: str = "object"
+    panel_reflectance: float = 0.2
 
     model_config = SettingsConfigDict(
         env_file=DOTENV_PATH,

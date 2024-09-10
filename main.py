@@ -3,7 +3,6 @@ from typing import Optional
 
 import typer
 from pydantic.json import pydantic_encoder
-
 from source.core import logger, settings
 from source.helpers import (
     load_all_selected_areas,
@@ -19,7 +18,9 @@ from source.misc import (
     display_spectral_images_with_areas,
 )
 from source.processing import (
+    convert_images_to_reflectance,
     convert_selected_areas_to_train_data,
+    create_spectral_signatures,
     find_transformation_between_images,
     perform_segmentation,
     select_areas_on_images,
@@ -82,6 +83,16 @@ def segment_images(label: Optional[str] = None):
         matx,
         label,
     )
+
+
+@app.command()
+def create_signatures():
+    create_spectral_signatures()
+
+
+@app.command()
+def convert_to_reflectance():
+    convert_images_to_reflectance()
 
 
 if __name__ == "__main__":

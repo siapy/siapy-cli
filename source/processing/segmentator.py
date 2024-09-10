@@ -17,7 +17,7 @@ from source.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
     read_spectral_images,
-    save_spectral_image,
+    save_radiance_image,
 )
 
 
@@ -109,7 +109,7 @@ def save_segmented_images(
             f"{filename_cam1}.hdr"
         )
         subarray = image_cam1.to_subarray(area)
-        save_spectral_image(subarray, filename_widx, metadata_cam1)
+        save_radiance_image(subarray, filename_widx, metadata_cam1)
 
     logger.info("Saving segmented images for Camera 2 ...")
     metadata_cam2 = {key: image_cam2.metadata[key] for key in meta_keys_to_extract}
@@ -120,7 +120,7 @@ def save_segmented_images(
             f"{filename_cam2}.hdr"
         )
         subarray = image_cam2.to_subarray(area)
-        save_spectral_image(subarray, filename_widx, metadata_cam2)
+        save_radiance_image(subarray, filename_widx, metadata_cam2)
 
 
 def perform_segmentation(
