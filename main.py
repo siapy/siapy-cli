@@ -110,8 +110,8 @@ def segment_images(label: Optional[str] = None):
 
 
 @app.command()
-def convert_to_reflectance():
-    convert_images_to_reflectance()
+def convert_to_reflectance(panel_reflectance: float):
+    convert_images_to_reflectance(panel_reflectance)
 
 
 @app.command()

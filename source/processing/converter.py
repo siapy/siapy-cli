@@ -22,7 +22,9 @@ def calculate_correction_factor_from_panel(
     return panel_correction
 
 
-def _convert_imageset_to_reflectance(image_set: list[SpectralImage]):
+def _convert_imageset_to_reflectance(
+    image_set: list[SpectralImage], panel_reflectance: float
+):
     panel_correction: None | np.ndarray = None
     panel_image_idx: None | str = None
 
@@ -35,7 +37,7 @@ def _convert_imageset_to_reflectance(image_set: list[SpectralImage]):
         if object_idx == "0":
             panel_correction = calculate_correction_factor_from_panel(
                 image=image,
-                panel_reference_reflectance=settings.panel_reflectance,
+                panel_reference_reflectance=panel_reflectance,
             )
             panel_image_idx = image_idx
             continue
@@ -57,7 +59,7 @@ def _convert_imageset_to_reflectance(image_set: list[SpectralImage]):
             )
 
 
-def convert_images_to_reflectance():
+def convert_images_to_reflectance(panel_reflectance: float):
     image_set_cam1, image_set_cam2 = load_radiance_images()
-    _convert_imageset_to_reflectance(image_set_cam1)
-    _convert_imageset_to_reflectance(image_set_cam2)
+    _convert_imageset_to_reflectance(image_set_cam1, panel_reflectance)
+    _convert_imageset_to_reflectance(image_set_cam2, panel_reflectance)
