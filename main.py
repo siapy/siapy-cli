@@ -86,13 +86,13 @@ def segment_images(label: Optional[str] = None):
 
 
 @app.command()
-def create_signatures():
-    create_spectral_signatures()
+def convert_to_reflectance():
+    convert_images_to_reflectance()
 
 
 @app.command()
-def convert_to_reflectance():
-    convert_images_to_reflectance()
+def create_signatures(average_pixels: bool = True):
+    create_spectral_signatures(average_pixels)
 
 
 if __name__ == "__main__":

@@ -4,11 +4,13 @@ from .artifacts import (
     load_radiance_images,
     load_reflectance_images,
     load_selected_areas,
+    load_spectral_signatures,
     load_transformation_matrix,
     save_model,
     save_radiance_image,
     save_reflectance_image,
     save_selected_areas,
+    save_spectral_signatures,
     save_transformation_matrix,
 )
 from .helpers import (
@@ -34,4 +36,6 @@ __all__ = [
     "load_radiance_images",
     "save_reflectance_image",
     "load_reflectance_images",
+    "load_spectral_signatures",
+    "save_spectral_signatures",
 ]

@@ -28,17 +28,17 @@ def _convert_imageset_to_reflectance(image_set: list[SpectralImage]):
 
     for image in image_set:
         filename = image.filepath.stem
-        # Here the assumption is made that first object is reference panel
         image_idx, object_idx = filename.split(settings.labels_part_deliminator)[
             0
         ].split(settings.labels_between_deliminator)
+        # Here the assumption is made that first object is reference panel
         if object_idx == "0":
             panel_correction = calculate_correction_factor_from_panel(
                 image=image,
                 panel_reference_reflectance=settings.panel_reflectance,
             )
             panel_image_idx = image_idx
-            # continue # uncomment if reference panel should not be saved
+            continue
 
         if (
             panel_correction is not None

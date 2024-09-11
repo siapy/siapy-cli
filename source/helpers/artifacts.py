@@ -4,6 +4,7 @@ import shutil
 from typing import Any
 
 import numpy as np
+import pandas as pd
 from siapy.entities import Pixels
 from siapy.entities.imagesets import SpectralImage
 from siapy.utils.images import save_image
@@ -25,6 +26,7 @@ _IMAGE_DIR = settings.artifacts_dir / "images"
 _IMAGE_RADIANCE_DIR = _IMAGE_DIR / "radiance"
 _IMAGE_REFLECTANCE_DIR = _IMAGE_DIR / "reflectance"
 _SIGNATURES_EXPORT_DIR = settings.artifacts_dir / "signatures"
+_SIGNATURES_REFLECTANCE = _SIGNATURES_EXPORT_DIR / "signatures.parquet"
 
 
 def save_transformation_matrix(matx: np.ndarray):
@@ -165,3 +167,15 @@ def load_reflectance_images() -> tuple[list[SpectralImage], list[SpectralImage]]
             "Reflectance images directory does not exist. You need to segment images first."
         )
     return read_spectral_images(_IMAGE_REFLECTANCE_DIR)
+
+
+def save_spectral_signatures(signatures: pd.DataFrame):
+    _SIGNATURES_EXPORT_DIR.mkdir(parents=True, exist_ok=True)
+    signatures.to_parquet(_SIGNATURES_REFLECTANCE, engine="pyarrow")
+
+
+def load_spectral_signatures() -> pd.DataFrame:
+    if not _SIGNATURES_REFLECTANCE.exists():
+        raise FileNotFoundError("Spectral signatures file does not exist.")
+
+    return pd.read_parquet(_SIGNATURES_REFLECTANCE, engine="pyarrow")
