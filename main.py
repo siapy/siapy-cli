@@ -1,4 +1,5 @@
 import json
+from importlib.metadata import PackageNotFoundError, version
 from typing import Optional
 
 import typer
@@ -28,6 +29,29 @@ from source.processing import (
 )
 
 app = typer.Typer()
+
+
+def version_callback(value: bool):
+    if value:
+        try:
+            siapy_version = version("siapy")
+        except PackageNotFoundError:
+            siapy_version = "unknown"
+        typer.echo(f"CLI version: 0.1.0\nSiapy library version: {siapy_version}")
+        raise typer.Exit()
+
+
+@app.callback()
+def main(
+    version: bool = typer.Option(
+        None,
+        "--version",
+        callback=version_callback,
+        is_eager=True,
+        help="Show the application's version and exit.",
+    ),
+):
+    pass
 
 
 @app.command()
