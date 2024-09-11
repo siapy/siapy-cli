@@ -5,6 +5,22 @@ from siapy.entities.imagesets import SpectralImage, SpectralImageSet
 from source.core import logger, settings
 
 
+def _validate_filepaths_order(
+    image_set_cam1: list[SpectralImage], image_set_cam2: list[SpectralImage]
+):
+    labels_cam1 = [
+        image.filepath.stem.split(settings.labels_part_deliminator)[0]
+        for image in image_set_cam1
+    ]
+    labels_cam2 = [
+        image.filepath.stem.split(settings.labels_part_deliminator)[0]
+        for image in image_set_cam2
+    ]
+    for label_cam1, label_cam2 in zip(labels_cam1, labels_cam2):
+        if label_cam1 != label_cam2:
+            raise ValueError("Check images, labels are not ordered correctly! ")
+
+
 def read_spectral_images(
     images_dir: Path | str | None = None,
 ) -> tuple[list[SpectralImage], list[SpectralImage]]:
@@ -34,6 +50,7 @@ def read_spectral_images(
     image_set_cam1 = image_set.images_by_camera_id(settings.camera1_id)
     image_set_cam2 = image_set.images_by_camera_id(settings.camera2_id)
 
+    _validate_filepaths_order(image_set_cam1, image_set_cam2)
     return image_set_cam1, image_set_cam2
 
 
