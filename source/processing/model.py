@@ -20,10 +20,10 @@ def convert_selected_areas_to_train_data(
     labels_cam1, labels_cam2 = extract_labels_from_spectral_images(
         image_set_cam1, image_set_cam2
     )
-    X_cam1 = []
-    y_cam1 = []
-    X_cam2 = []
-    y_cam2 = []
+    X_cam1: list[np.ndarray] = []
+    y_cam1: list[str] = []
+    X_cam2: list[np.ndarray] = []
+    y_cam2: list[str] = []
     logger.info("Converting areas to train data format.")
     for category, data in selected_areas.items():
         for label, pixels_list in data.items():

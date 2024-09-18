@@ -34,8 +34,8 @@ def display_spectral_image(label: Optional[str] = None):
         )
 
     fig, ax = plt.subplots(1, 2)
-    ax[0].imshow(image_cam1.to_display())  # noqa
-    ax[1].imshow(image_cam2.to_display())  # noqa
+    ax[0].imshow(image_cam1.to_display())  # type: ignore
+    ax[1].imshow(image_cam2.to_display())  # type: ignore
     plt.show()
 
 
