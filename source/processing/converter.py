@@ -1,25 +1,12 @@
 import numpy as np
 from siapy.entities import SpectralImage
 from siapy.utils.images import (
+    calculate_correction_factor_from_panel,
     convert_radiance_image_to_reflectance,
 )
 
 from source.core import settings
 from source.helpers import load_radiance_images, save_reflectance_image
-
-
-def calculate_correction_factor_from_panel(
-    image: SpectralImage,
-    panel_reference_reflectance: float,
-) -> np.ndarray:
-    # !TODO: need to change this in siapy-lib
-    # Also correct type for axis
-    # also in convert_radiance_image_to_reflectance set default to None
-
-    panel_radiance_mean = image.mean(axis=(0, 1))
-    panel_reflectance_mean = np.full(image.bands, panel_reference_reflectance)
-    panel_correction = panel_reflectance_mean / panel_radiance_mean
-    return panel_correction
 
 
 def _convert_imageset_to_reflectance(
@@ -51,6 +38,10 @@ def _convert_imageset_to_reflectance(
             image_np = convert_radiance_image_to_reflectance(
                 image=image, panel_correction=panel_correction, save_path=None
             )
+            if not isinstance(image_np, np.ndarray):
+                raise ValueError(
+                    "convert_radiance_image_to_reflectance must return np.ndarray"
+                )
             save_reflectance_image(image_np, filepath, image.metadata)
         else:
             raise ValueError(
