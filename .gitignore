@@ -14,3 +14,4 @@ dist
 _old
 artifacts
 .env
+.history
