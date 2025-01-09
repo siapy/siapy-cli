@@ -8,9 +8,6 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 DOTENV_PATH = ".env"
 
 BASE_DIR = Path(__file__).parent.parent.parent.absolute()
-SAVED_DIR = BASE_DIR / "artifacts"
-
-SAVED_DIR.mkdir(parents=True, exist_ok=True)
 
 load_dotenv(override=True, dotenv_path=DOTENV_PATH)
 
@@ -18,14 +15,14 @@ load_dotenv(override=True, dotenv_path=DOTENV_PATH)
 class Settings(BaseSettings):
     project_name: str = Field(
         default=None,
-        description="Project name - artifacts saved under this name in 'saved' dictionary",
+        description="Project name - artifacts saved under this name in 'artifacts' directory",
     )
     images_dir: Path = Field(
         default=None, description="Path to spectral images directory."
     )
     artifacts_dir: Path = Field(
-        default=SAVED_DIR,
-        description="Path to program artifacts directory. Currently cannot be changed.",
+        default=None,
+        description="Path to program artifacts directory. Set based on BASE_DIR / 'artifacts' / project_name.",
     )
     debug: bool = Field(
         default=False, description="If logging displays debug information."
@@ -71,6 +68,16 @@ class Settings(BaseSettings):
         if project_name is None:
             raise ValueError("Define 'PROJECT_NAME' in .env file.")
         return project_name
+
+    @field_validator("artifacts_dir", mode="before")
+    @classmethod
+    def set_artifacts_dir(cls, v, values):
+        project_name = values.data.get("project_name")
+        if not project_name:
+            return ""
+        artifacts_path = BASE_DIR / "artifacts" / project_name
+        artifacts_path.mkdir(parents=True, exist_ok=True)
+        return artifacts_path
 
 
 settings = Settings()
