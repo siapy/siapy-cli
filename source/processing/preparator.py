@@ -7,6 +7,18 @@ from source.core import settings
 from source.helpers import load_reflectance_images, save_spectral_signatures
 
 
+def get_label_from_filename(object_idx_cam1, filename):
+    # TODO: This is a temporary solution.
+    try:
+        label = filename.split(settings.labels_between_deliminator)[
+            int(object_idx_cam1) - 1
+        ]
+    except IndexError:
+        label = filename.split(settings.labels_between_deliminator)[0]
+
+    return label
+
+
 def create_spectral_signatures(average_pixels: bool):
     image_set_cam1, image_set_cam2 = load_reflectance_images()
     signatures_data = []
@@ -32,9 +44,7 @@ def create_spectral_signatures(average_pixels: bool):
             signal_cam1 = image_cam1.mean(axis=(0, 1))
             signal_cam2 = image_cam2.mean(axis=(0, 1))
             filename = filename_cam1.split(settings.labels_part_deliminator)[1]
-            label = filename.split(settings.labels_between_deliminator)[
-                int(object_idx_cam1) - 1
-            ]
+            label = get_label_from_filename(object_idx_cam1, filename)
 
             signatures_data.append(
                 {
@@ -51,9 +61,7 @@ def create_spectral_signatures(average_pixels: bool):
             image_np_cam2 = image_cam2.to_numpy()
             image_np_cam2 = rescale(image_np_cam2, image_np_cam1.shape[:2])
             filename = filename_cam1.split(settings.labels_part_deliminator)[1]
-            label = filename.split(settings.labels_between_deliminator)[
-                int(object_idx_cam1) - 1
-            ]
+            label = get_label_from_filename(object_idx_cam1, filename)
 
             for x, y in np.ndindex(image_np_cam1.shape[:2]):
                 signatures_data.append(
