@@ -150,7 +150,7 @@ If all the steps were executed successfully, you can proceed to segment the imag
 # Start from the beginning
 siapy-cli segment-images
 # Start from label L
-siapy-cli segment-images L
+siapy-cli segment-images --label L
 ```
 
 - First, select the reference panel.
