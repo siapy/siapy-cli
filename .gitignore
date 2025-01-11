@@ -15,3 +15,6 @@ _old
 artifacts
 .env
 .history
+extensions/models/*
+extensions/data_loaders/*
+!*.gitkeep
