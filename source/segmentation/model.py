@@ -5,7 +5,7 @@ from sklearn.preprocessing import LabelEncoder
 from xgboost import XGBClassifier
 
 from source.core import logger
-from source.helpers import (
+from source.misc.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
     read_spectral_images,

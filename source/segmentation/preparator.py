@@ -2,9 +2,8 @@ import numpy as np
 import pandas as pd
 from rich.progress import track
 from siapy.transformations.image import rescale
-
 from source.core import settings
-from source.helpers import load_reflectance_images, save_spectral_signatures
+from source.core.artifacts import load_reflectance_images, save_spectral_signatures
 
 
 def get_label_from_filename(object_idx_cam1, filename):

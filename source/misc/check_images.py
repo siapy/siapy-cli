@@ -1,7 +1,9 @@
 import numpy as np
-
 from source.core import logger
-from source.helpers import extract_labels_from_spectral_images, read_spectral_images
+from source.misc.helpers import (
+    extract_labels_from_spectral_images,
+    read_spectral_images,
+)
 
 
 def check_duplicate_labels(labels):

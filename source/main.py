@@ -5,7 +5,7 @@ from typing import Optional
 import typer
 from pydantic.json import pydantic_encoder
 from source.core import logger, settings
-from source.helpers import (
+from source.core.artifacts import (
     load_all_selected_areas,
     load_model,
     load_transformation_matrix,
@@ -13,12 +13,12 @@ from source.helpers import (
     save_selected_areas,
     save_transformation_matrix,
 )
-from source.misc import (
-    check_spectral_images,
+from source.misc.check_images import check_spectral_images
+from source.misc.display_image import (
     display_spectral_image,
     display_spectral_images_with_areas,
 )
-from source.processing import (
+from source.segmentation import (
     convert_images_to_reflectance,
     convert_selected_areas_to_train_data,
     create_spectral_signatures,

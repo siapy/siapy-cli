@@ -1,9 +1,8 @@
 import numpy as np
 from siapy.transformations import corregistrator
 from siapy.utils.plots import pixels_select_click
-
 from source.core import logger
-from source.helpers import (
+from source.misc.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
     read_spectral_images,

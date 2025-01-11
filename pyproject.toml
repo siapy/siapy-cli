@@ -57,3 +57,6 @@ ignore-words-list = "janezlapajne"
 skip = 'dist/*, docs, LICENCE, *.lock, *.toml, *.cff'
 count = true
 check-hidden = false
+
+[tool.flake8]
+max-line-length = 120

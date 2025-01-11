@@ -9,11 +9,9 @@ from siapy.entities import Pixels
 from siapy.entities.imagesets import SpectralImage
 from siapy.utils.images import save_image
 from sklearn.preprocessing import LabelEncoder
-from xgboost import XGBClassifier
-
 from source.core import logger, settings
-
-from .helpers import read_spectral_images
+from source.misc.helpers import read_spectral_images
+from xgboost import XGBClassifier
 
 _TRANSFORMATION_MATX_FILENAME = settings.artifacts_dir / "transform/matx.pkl"
 _SELECTED_AREAS_DIR = settings.artifacts_dir / "areas"

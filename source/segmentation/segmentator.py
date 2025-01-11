@@ -10,15 +10,16 @@ from siapy.utils.plots import (
     pixels_select_lasso,
 )
 from sklearn.preprocessing import LabelEncoder
-from xgboost import XGBClassifier
-
 from source.core import logger, settings
-from source.helpers import (
-    extract_labels_from_spectral_images,
-    get_images_by_label,
+from source.core.artifacts import (
     read_spectral_images,
     save_radiance_image,
 )
+from source.misc.helpers import (
+    extract_labels_from_spectral_images,
+    get_images_by_label,
+)
+from xgboost import XGBClassifier
 
 
 def _handle_out_flag(out_flag: InteractiveButtonsEnum | None, index: int) -> int:

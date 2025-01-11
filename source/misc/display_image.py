@@ -7,8 +7,7 @@ from siapy.transformations import corregistrator
 from siapy.utils.plots import (
     display_multiple_images_with_areas,
 )
-
-from source.helpers import (
+from source.misc.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
     read_spectral_images,
