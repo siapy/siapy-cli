@@ -1,8 +1,8 @@
-# Siapy command line tool
+# Siapy CLI
 
-This repository provides a command line interface (CLI) for the [siapy](https://github.com/siapy/siapy-lib) library, designed to streamline the segmentation of spectral images for further analysis.
+This repository provides a command line interface (CLI) for the [siapy](https://github.com/siapy/siapy-lib) library.
 
-> **Note**: This project is subject to frequent changes. To ensure you have the latest updates, please clone a fresh copy of the repository before use.
+> :exclamation: **Note**: This project is subject to frequent changes. To ensure you have the latest updates, please clone a fresh copy of the repository before use. Currently, the repository is not versioned and will remain unversioned until the project reaches greater stability.
 
 With this CLI, you can:
 
@@ -11,7 +11,10 @@ With this CLI, you can:
 - Select regions in images for training machine learning (ML) models.
 - Perform image segmentation using a pre-trained ML model.
 - Convert radiance images to reflectance by utilizing a reference panel.
-- Display spectral signatures for in-depth analysis.
+- Convert segmented areas into spectral signatures.
+- Display spectral signatures.
+- Build a machine learning model using these spectral signatures.
+- Classify objects in the images based on the trained model.
 
 ## 🏃‍♀️ Installation
 
@@ -73,20 +76,15 @@ Options:
   --help                  Show this message and exit.
 
 Commands:
-  calculate-transformation
-  check-images
-  convert-to-reflectance
-  create-signatures
-  display-image
-  display-settings
-  segment-images
-  select-areas
-  train-model
+  info            General information about the project or the environment.
+  misc            Miscellaneous commands, e.g., check images, statistics, etc.
+  segment         Segmentation commands, e.g., select areas, train model, etc.
 ```
 
 ## 📖 Cookbook
 
-This guide provides a step-by-step workflow to segment relevant areas of spectral images.
+This guide provides an opinionated step-by-step workflow for using the `siapy-cli` tool.
+To follow along, download the example data from [Zenodo](https://zenodo.org/records/14534998).
 
 **Image Naming Convention**
 
@@ -102,14 +100,14 @@ Where:
 - Labels are separated by an underscore (`_`)
 - Double underscore (`__`) separates the label section from the rest of the filename.
 
-### Workflow
+### Workflow - Segmentation of images
 
 1. Check images
 
 Run the following command to check the images:
 
 ``` zsh
-siapy-cli check-images
+siapy-cli misc check-images
 ```
 
 - The number of images and unique labels should be the same for both cameras.
@@ -120,7 +118,7 @@ siapy-cli check-images
 Calculate the transformation between the two cameras using the label L:
 
 ``` zsh
-siapy-cli calculate-transformation L
+siapy-cli segment calculate-transformation L
 ```
 
 - L is the label on one image where the corresponding points will be selected first on camera one and then on camera two.
@@ -133,15 +131,15 @@ Run the following commands to select approximately balanced areas for each categ
 
 ``` zsh
 # For label e.g. object
-siapy-cli select-areas L object
+siapy-cli segment select-areas L object
 # For label e.g. background
-siapy-cli select-areas L background
+siapy-cli segment select-areas L background
 ```
 
 4. Train model based on selected areas
 
 ``` zsh
-siapy-cli train-model
+siapy-cli segment train-model
 ```
 
 5. Segment images
@@ -150,9 +148,9 @@ If all the steps were executed successfully, you can proceed to segment the imag
 
 ``` zsh
 # Start from the beginning
-siapy-cli segment-images
+siapy-cli segment segment-images
 # Start from label L
-siapy-cli segment-images --label L
+siapy-cli segment segment-images --label L
 ```
 
 - First, select the reference panel.
@@ -164,9 +162,9 @@ siapy-cli segment-images --label L
 Convert images based on reference panel reflectance values:
 
 ``` zsh
-siapy-cli convert-to-reflectance VALUE
+siapy-cli segment convert-to-reflectance VALUE
 # e.g. for reflectance value of 0.2
-siapy-cli convert-to-reflectance 0.2
+siapy-cli segment convert-to-reflectance 0.2
 ```
 
 7. Convert to spectral signatures
@@ -174,12 +172,12 @@ siapy-cli convert-to-reflectance 0.2
 Convert the segmented images to a tabular format for further analysis:
 
 ``` zsh
-siapy-cli create-signatures
+siapy-cli segment create-signatures
 ```
 
 - This step will create one row for each object. Therefore, one object in the image will be described by one spectral signature.
 
-### Output
+**Output**
 
 Upon execution, images and a Parquet file will be created. All artifacts are saved in `siapy-cli/artifacts` directory.
 
