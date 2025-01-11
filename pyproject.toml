@@ -15,16 +15,16 @@ readme = "README.md"
 license = { text = "MIT" }
 
 [project.scripts]
-siapy-cli = "main:app"
+siapy-cli = "source.main:app"
 
 [tool.pdm]
 distribution = true
 
 [tool.pdm.build]
-source-includes = ["source/", "main.py"]
+source-includes = ["source/"]
 
 [tool.pdm.scripts]
-siapy-cli.cmd = "main.py"
+siapy-cli.cmd = "source/main.py"
 siapy-cli.env_file.override = ".env"
 
 [build-system]
@@ -50,7 +50,7 @@ ignore_missing_imports = true
 extend-exclude = []
 exclude = []
 lint.ignore = ["F811"]
-src = ["source/", "main.py"]
+src = ["source/"]
 
 [tool.codespell]
 ignore-words-list = "janezlapajne"

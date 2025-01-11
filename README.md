@@ -2,6 +2,8 @@
 
 This repository provides a command line interface (CLI) for the [siapy](https://github.com/siapy/siapy-lib) library, designed to streamline the segmentation of spectral images for further analysis.
 
+> **Note**: This project is subject to frequent changes. To ensure you have the latest updates, please clone a fresh copy of the repository before use.
+
 With this CLI, you can:
 
 - Display images from two cameras.
@@ -52,9 +54,9 @@ Run one of the following commands to verify the installation and check if everyt
 ``` zsh
 siapy-cli --version
 # or
-pdm run main.py --version
+pdm run ./source/main.py --version
 # or
-python main.py --version
+python ./source/main.py --version
 # ...
 ```
 
