@@ -5,7 +5,7 @@
 groups = ["default", "dev", "lint"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:f2b4fbb93f348d8176dfe43ed5f589e201566d423ff8e7f5ddea5c056f2b8d3a"
+content_hash = "sha256:13e9f2072ea76227c34ed52dc2e457dfcf91ae5ffe3c7c933fbe3b3bf8d28aab"
 
 [[metadata.targets]]
 requires_python = "==3.10.*"
@@ -1733,6 +1733,17 @@ dependencies = [
 files = [
     {file = "sympy-1.13.1-py3-none-any.whl", hash = "sha256:db36cdc64bf61b9b24578b6f7bab1ecdd2452cf008f34faa33776680c26d66f8"},
     {file = "sympy-1.13.1.tar.gz", hash = "sha256:9cebf7e04ff162015ce31c9c6c9144daa34a93bd082f54fd8f12deca4f47515f"},
+]
+
+[[package]]
+name = "tabulate"
+version = "0.9.0"
+requires_python = ">=3.7"
+summary = "Pretty-print tabular data"
+groups = ["default"]
+files = [
+    {file = "tabulate-0.9.0-py3-none-any.whl", hash = "sha256:024ca478df22e9340661486f85298cff5f6dcdba14f3813e8830015b9ed1948f"},
+    {file = "tabulate-0.9.0.tar.gz", hash = "sha256:0095b12bf5966de529c0feb1fa08671671b3368eec77d7ef7ab114be2c068b3c"},
 ]
 
 [[package]]
