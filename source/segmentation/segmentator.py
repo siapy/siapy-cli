@@ -11,7 +11,7 @@ from siapy.utils.plots import (
 )
 from sklearn.preprocessing import LabelEncoder
 from source.core import logger, settings
-from source.core.artifacts import (
+from source.segmentation.artifacts import (
     read_spectral_images,
     save_radiance_image,
 )

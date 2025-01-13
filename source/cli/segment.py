@@ -1,7 +1,7 @@
 from typing import Optional
 
 import typer
-from source.core.artifacts import (
+from source.segmentation.artifacts import (
     load_all_selected_areas,
     load_model,
     load_transformation_matrix,

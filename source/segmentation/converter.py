@@ -5,7 +5,7 @@ from siapy.utils.images import (
     convert_radiance_image_to_reflectance,
 )
 from source.core import settings
-from source.core.artifacts import load_radiance_images, save_reflectance_image
+from source.segmentation.artifacts import load_radiance_images, save_reflectance_image
 
 
 def _convert_imageset_to_reflectance(
