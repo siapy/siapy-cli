@@ -5,7 +5,7 @@
 groups = ["default", "dev", "lint"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:13e9f2072ea76227c34ed52dc2e457dfcf91ae5ffe3c7c933fbe3b3bf8d28aab"
+content_hash = "sha256:bebee709efe4f385ed8e4e81a0e167b32b5b4553950f61e662f699b06e5670d7"
 
 [[metadata.targets]]
 requires_python = "==3.10.*"
@@ -1855,6 +1855,15 @@ groups = ["default"]
 files = [
     {file = "tzdata-2024.1-py2.py3-none-any.whl", hash = "sha256:9068bc196136463f5245e51efda838afa15aaeca9903f49050dfa2679db4d252"},
     {file = "tzdata-2024.1.tar.gz", hash = "sha256:2674120f8d891909751c38abcdfd386ac0a5a1127954fbc332af6b5ceae07efd"},
+]
+
+[[package]]
+name = "umap"
+version = "0.1.1"
+summary = "UNIST synthesis MAP solution"
+groups = ["default"]
+files = [
+    {file = "umap-0.1.1.tar.gz", hash = "sha256:5d08c1a335cc7ee175811a99dc9356d3d4b8567ad082e2b1b205198cf27c4256"},
 ]
 
 [[package]]
