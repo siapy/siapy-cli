@@ -1,5 +1,4 @@
 import os
-import pickle
 import shutil
 from typing import Any
 
@@ -11,6 +10,7 @@ from siapy.utils.images import save_image
 from sklearn.preprocessing import LabelEncoder
 from source.core import logger, settings
 from source.misc.helpers import read_spectral_images
+from source.utils.utils import read_pickle, write_pickle
 from xgboost import XGBClassifier
 
 _TRANSFORMATION_MATX_FILENAME = settings.artifacts_dir / "transform/matx.pkl"
@@ -30,8 +30,7 @@ _SIGNATURES_REFLECTANCE = _SIGNATURES_EXPORT_DIR / "signatures.parquet"
 def save_transformation_matrix(matx: np.ndarray):
     _TRANSFORMATION_MATX_FILENAME.parent.mkdir(parents=True, exist_ok=True)
     logger.info("Saving transformation matrix to: %s" % _TRANSFORMATION_MATX_FILENAME)
-    with open(_TRANSFORMATION_MATX_FILENAME, "wb") as f:
-        pickle.dump(matx, f)
+    write_pickle(matx, _TRANSFORMATION_MATX_FILENAME)
 
 
 def load_transformation_matrix() -> np.ndarray:
@@ -42,10 +41,7 @@ def load_transformation_matrix() -> np.ndarray:
     logger.info(
         "Loading transformation matrix from: %s" % _TRANSFORMATION_MATX_FILENAME
     )
-    with open(_TRANSFORMATION_MATX_FILENAME, "rb") as f:
-        matx = pickle.load(f)
-
-    return matx
+    return read_pickle(_TRANSFORMATION_MATX_FILENAME)
 
 
 def save_selected_areas(selected_areas: list[Pixels], category: str, label: str):
@@ -93,16 +89,12 @@ def save_model(
 ):
     _MODEL_DIR.mkdir(parents=True, exist_ok=True)
     model_cam1.save_model(_MODEL_CLF_FILENAMEM_CAM1)
-    with open(_MODEL_ENCODER_FILENAME_CAM1, "wb") as f:
-        pickle.dump(encoder_cam1, f)
+    write_pickle(encoder_cam1, _MODEL_ENCODER_FILENAME_CAM1)
     logger.info("Model saved for camera 1.")
 
     model_cam2.save_model(_MODEL_CLF_FILENAMEM_CAM2)
-    with open(_MODEL_ENCODER_FILENAME_CAM2, "wb") as f:
-        pickle.dump(encoder_cam2, f)
+    write_pickle(encoder_cam2, _MODEL_ENCODER_FILENAME_CAM2)
     logger.info("Model saved for camera 2.")
-
-    # load_model()
 
 
 def load_model() -> tuple[LabelEncoder, XGBClassifier, LabelEncoder, XGBClassifier]:
@@ -114,10 +106,7 @@ def load_model() -> tuple[LabelEncoder, XGBClassifier, LabelEncoder, XGBClassifi
 
     model_cam1 = XGBClassifier()
     model_cam1.load_model(_MODEL_CLF_FILENAMEM_CAM1)
-
-    with open(_MODEL_ENCODER_FILENAME_CAM1, "rb") as f:
-        encoder_cam1 = pickle.load(f)
-
+    encoder_cam1 = read_pickle(_MODEL_ENCODER_FILENAME_CAM1)
     logger.info("Model loaded for camera 1.")
 
     if (
@@ -128,10 +117,7 @@ def load_model() -> tuple[LabelEncoder, XGBClassifier, LabelEncoder, XGBClassifi
 
     model_cam2 = XGBClassifier()
     model_cam2.load_model(_MODEL_CLF_FILENAMEM_CAM2)
-
-    with open(_MODEL_ENCODER_FILENAME_CAM2, "rb") as f:
-        encoder_cam2 = pickle.load(f)
-
+    encoder_cam2 = read_pickle(_MODEL_ENCODER_FILENAME_CAM2)
     logger.info("Model loaded for camera 2.")
 
     return encoder_cam1, model_cam1, encoder_cam2, model_cam2
