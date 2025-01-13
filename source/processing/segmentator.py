@@ -149,7 +149,7 @@ def perform_segmentation(
 
         logger.info(f"Processed index: '__ {index} __' ")
         logger.info(
-            "Processed files:\n" " -> Camera 1 '{}'\n" " -> Camera 2 '{}'".format(
+            "Processed files:\n -> Camera 1 '{}'\n -> Camera 2 '{}'".format(
                 image_cam1.filepath.stem, image_cam2.filepath.stem
             )
         )
