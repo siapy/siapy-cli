@@ -3,6 +3,7 @@ from typing import Optional
 
 import typer
 from rich import print
+from source.analysis import metrics
 from source.analysis.artifacts import artifacts
 from source.analysis.extensions import (
     import_data_loader,
@@ -55,3 +56,26 @@ def train_model(
         score = trainer.score_model(X, y)
         artifacts.save_metric(score)
     artifacts.save_encoder(trainer.encoder)
+
+
+@app.command()
+def generate_metrics(
+    model: Optional[str] = None,
+    data_loader: Optional[str] = None,
+    do_optimize: bool = False,
+):
+    artifacts.set_dir_params(
+        DirParams(
+            estimator_name=model,
+            estimator_is_optimized=do_optimize,
+            data_loader_name=data_loader,
+        )
+    )
+
+    X, y = import_data_loader(data_loader).load_data()
+
+    model_ = artifacts.load_unfit_model()
+    encoder = artifacts.load_encoder()
+
+    metrics_ = metrics.calculate_metrics(model_, encoder, X, y)
+    artifacts.save_metrics(metrics_)

@@ -86,10 +86,10 @@ def calculate_metrics(
     encoder: LabelEncoder,
     X: np.ndarray,
     y: np.ndarray,
-    meta: np.ndarray,
 ) -> list[Metrics]:
     metrics = []
     y_encoded = np.array(encoder.fit_transform(y))
+    meta = np.array([0] * len(y))  # ? meta is not used for now
     metrics_cont = cross_validate(model, X, y_encoded, meta)
 
     for id_, metrics_temp in metrics_cont.items():
