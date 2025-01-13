@@ -24,6 +24,10 @@ class Settings(BaseSettings):
         default=None,
         description="Path to program artifacts directory. Set based on BASE_DIR / 'artifacts' / project_name.",
     )
+    extensions_dir: Path = Field(
+        default=BASE_DIR / "extensions",
+        description="Path to extensions directory.",
+    )
     debug: bool = Field(
         default=False, description="If logging displays debug information."
     )

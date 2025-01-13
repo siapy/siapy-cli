@@ -18,3 +18,4 @@ artifacts
 extensions/models/*
 extensions/data_loaders/*
 !*.gitkeep
+!extensions/*/ex_*.py
