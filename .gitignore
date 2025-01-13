@@ -11,11 +11,13 @@ dist
 .pdm-python
 .coverage
 .vscode
-_old
-artifacts
 .env
 .history
+
+_old
+artifacts
 extensions/models/*
 extensions/data_loaders/*
+extensions/parameters/*
 !*.gitkeep
 !extensions/*/ex_*.py

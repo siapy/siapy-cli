@@ -1,8 +1,12 @@
+import importlib.util
 import json
 import pickle
+import sys
 from collections import OrderedDict
 from pathlib import Path
-from typing import Any, Generator, Union
+from typing import Any, Generator, Optional, Union
+
+from source.core import logger
 
 
 def read_json(fname: Union[str, Path]) -> OrderedDict:
@@ -51,3 +55,32 @@ def dict_zip(*dicts: dict[str, Any]) -> Generator[tuple[str, Any, Any], None, No
 
     for key, first_val in dicts[0].items():
         yield key, first_val, *(other[key] for other in dicts[1:])
+
+
+def import_class(
+    class_name: Optional[str],
+    directory: Path,
+    default_class_name: str,
+) -> Any:
+    if class_name is None:
+        class_name = default_class_name
+
+    logger.info(f"Searching for class '{class_name}' in directory '{directory}'")
+
+    # Add the directory to the system path if it's not already there
+    if str(directory) not in sys.path:
+        sys.path.append(str(directory))
+
+    for file in directory.glob("*.py"):
+        module_name = file.stem
+        logger.info(f"Attempting to load module '{module_name}' from file '{file}'")
+        spec = importlib.util.spec_from_file_location(module_name, file)
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
+        spec.loader.exec_module(module)
+        if hasattr(module, class_name):
+            logger.info(f"Loading class '{class_name}' from module '{module_name}'")
+            return getattr(module, class_name)()
+    raise FileNotFoundError(
+        f"Class '{class_name}' not found in any module in '{directory}'"
+    )
