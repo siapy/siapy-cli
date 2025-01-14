@@ -25,24 +25,14 @@ def display_metrics(
     metrics: dict[str, list[Metrics]],
     model: Optional[str] = None,
     do_optimize: Optional[bool] = None,
-    group_id: Optional[int] = None,
-    imaging_id: Optional[list[int]] = [1, 2, 3],
-    camera_label: Optional[list[str]] = ["vnir", "swir"],
+    data_loader: Optional[str] = None,
 ):
     def check_filter(params: DirParams) -> bool:
         if model is not None and params.estimator_name != model:
             return False
         if do_optimize is not None and params.estimator_is_optimized != do_optimize:
             return False
-        if group_id is not None and params.load_group_id != group_id:
-            return False
-        if imaging_id is not None and not any(
-            id in params.load_imagings_ids for id in imaging_id
-        ):
-            return False
-        if camera_label is not None and not any(
-            label in params.load_cameras_labels for label in camera_label
-        ):
+        if data_loader is not None and params.data_loader_name != data_loader:
             return False
         return True
 

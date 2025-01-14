@@ -12,6 +12,7 @@ from source.analysis.extensions import import_model
 from source.analysis.metrics import Metrics
 from source.analysis.params import DirParams, params_to_path
 from source.core import logger, settings
+from source.misc.helpers import read_spectral_images
 from source.utils.utils import (
     read_json,
     read_pickle,
@@ -35,6 +36,9 @@ RESULT_CONFUSION_MTX = "confusion_matrix.png"
 RESULT_RELEVANT_FEATURES = "relevant_features.png"
 RESULT_RELEVANT_AMPLITUDES = "relevant_amplitudes.png"
 RESULT_SIGNATURES = "signatures.png"
+
+# This directory is independent of other artifacts and is not related to the current experiment run
+SPECTRAL_BANDS_DIR = settings.artifacts_dir / "bands"
 
 
 class Artifacts:
@@ -160,13 +164,30 @@ class Artifacts:
         save_path = self._set_save_path(RESULTS)
         np.save(save_path / RESULT_SHAP_VALUES, values)
 
-    def load_shap_values(self) -> np.ndarray:
+    def load_shap_values(self) -> Optional[np.ndarray]:
         save_path = self._get_save_path(RESULTS, RESULT_SHAP_VALUES)
         if save_path:
             return np.load(save_path)
-        raise ValueError(
+
+        logger.warning(
             "SHAP values file could not be found. Make sure you have saved the SHAP values."
         )
+        return None
+
+    def load_spectral_bands(self) -> Optional[np.ndarray]:
+        SPECTRAL_BANDS_DIR.mkdir(parents=True, exist_ok=True)
+        save_path = SPECTRAL_BANDS_DIR / "bands.npy"
+        if save_path.exists():
+            return np.load(save_path)
+        try:
+            image_set_cam1, image_set_cam2 = read_spectral_images()
+            bands1 = image_set_cam1[0].wavelengths
+            bands2 = image_set_cam2[0].wavelengths
+            bands = np.concatenate([bands1, bands2])
+            np.save(save_path, bands)
+        except Exception as e:
+            logger.warning(f"Could not load spectral bands: {e}")
+        return None
 
 
 artifacts = Artifacts()

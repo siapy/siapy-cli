@@ -6,10 +6,11 @@ from siapy.optimizers.configs import (
     TabularOptimizerConfig,
 )
 from siapy.optimizers.optimizers import TabularOptimizer
+from siapy.optimizers.parameters import TrialParameters
 from siapy.optimizers.scorers import Scorer
 from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.preprocessing import LabelEncoder
-from source.analysis.base import BaseOptParameters, BaseSklearnModel
+from source.analysis.base import BaseSklearnModel
 
 CV = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=0)
 STUDY_CONFIG = OptimizeStudyConfig(n_trials=200, n_jobs=-1)
@@ -29,9 +30,8 @@ class Trainer:
         return self._encoder
 
     def optimize(
-        self, X: np.ndarray, y: np.ndarray, parameters: BaseOptParameters
+        self, X: np.ndarray, y: np.ndarray, trial_parameters: TrialParameters
     ) -> Study:
-        trial_parameters = parameters.get_trial_parameters()
         scorer = Scorer.init_cross_validator_scorer(scoring=SCORING, cv=CV, n_jobs=-1)
         configs = TabularOptimizerConfig(
             trial_parameters=trial_parameters,

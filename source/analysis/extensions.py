@@ -10,7 +10,7 @@ _PARAMETERS_DIR = settings.extensions_dir / "parameters"
 
 DEFAULT_DATA_LOADER_NAME = "DataLoaderExample"
 DEFAULT_ESTIMATOR_NAME = "SavgolSVC"
-DEFAULT_PARAMETERS_NAME = "ParamsSavgolSVC"
+DEFAULT_PARAMETERS_NAME = "ParamsSVC"
 
 
 def import_data_loader(data_loader_name: Optional[str]) -> BaseDataLoader:

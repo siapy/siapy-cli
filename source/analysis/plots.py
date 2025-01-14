@@ -1,3 +1,5 @@
+from typing import Optional
+
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,7 +15,9 @@ from sklearn.preprocessing import LabelEncoder
 from source.analysis.tools import smooth_relevances
 
 
-def relevant_features(relevances: np.ndarray, bands: np.ndarray) -> Figure:
+def relevant_features(
+    relevances: np.ndarray, bands: Optional[np.ndarray] = None
+) -> Figure:
     y = smooth_relevances(relevances)
     indices_by_relevance = np.argsort(y)[::-1]
     max_features = len(indices_by_relevance)
@@ -28,6 +32,9 @@ def relevant_features(relevances: np.ndarray, bands: np.ndarray) -> Figure:
 
     cmap = cm.get_cmap("viridis", 8)
     cmap.set_under("white")
+
+    if bands is None:
+        bands = np.arange(len(relevances))
 
     # Calculate bin edges based on bands
     edges = np.zeros(len(bands) + 1)
@@ -47,7 +54,12 @@ def relevant_features(relevances: np.ndarray, bands: np.ndarray) -> Figure:
     return fig
 
 
-def relevant_amplitudes(relevances: np.ndarray, bands: np.ndarray) -> Figure:
+def relevant_amplitudes(
+    relevances: np.ndarray, bands: Optional[np.ndarray] = None
+) -> Figure:
+    if bands is None:
+        bands = np.arange(len(relevances))
+
     y = smooth_relevances(relevances)
     x = bands
 
@@ -109,7 +121,7 @@ def signatures_display(
     encoder: LabelEncoder,
     X: np.ndarray,
     y: np.ndarray,
-    bands: np.ndarray | None = None,
+    bands: Optional[np.ndarray] = None,
     *,
     x_label: str = "Spectral bands",
     y_label: str = "",
@@ -174,7 +186,7 @@ def umap_display(
     encoder: LabelEncoder,
     X: np.ndarray,
     y: np.ndarray,
-    meta: np.ndarray,
+    meta: Optional[np.ndarray] = None,
 ) -> Figure:
     y_encoded = np.array(encoder.fit_transform(y))
     classes = encoder.classes_
