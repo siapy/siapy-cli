@@ -1,0 +1,46 @@
+import numpy as np
+from sklearn.utils import resample
+from source.analysis.base import BaseDataLoader
+from source.core import logger
+from source.segmentation.artifacts import load_spectral_signatures
+
+
+class IVRNemLoader(BaseDataLoader):
+    def load_data(self) -> tuple[np.ndarray, np.ndarray]:
+        X = load_spectral_signatures()
+        data = np.vstack(X["signature"])
+        y = X["label"]
+        labels = np.array([l.split("-")[0] for l in y])
+
+        # Remove elements that match the specific string "NK"
+        mask = labels != "NK"
+        data = data[mask]
+        labels = labels[mask]
+        unique_labels, counts = np.unique(labels, return_counts=True)
+
+        # Balance data based on the minimum number of samples
+        min_count = counts.min()
+        balanced_data = []
+        balanced_labels = []
+
+        for label in unique_labels:
+            label_mask = labels == label
+            label_data = data[label_mask]
+            label_labels = labels[label_mask]
+            label_data_resampled, label_labels_resampled = resample(
+                label_data,
+                label_labels,
+                n_samples=int(min_count),
+                random_state=42,
+            )  # type: ignore
+            balanced_data.append(label_data_resampled)
+            balanced_labels.append(label_labels_resampled)
+
+        balanced_data_out = np.vstack(balanced_data)
+        balanced_labels_out = np.concatenate(balanced_labels)
+
+        logger.info(
+            f"Unique labels and their counts after balancing:"
+            f" {dict(zip(unique_labels, [min_count] * len(unique_labels)))}"
+        )
+        return self._shuffle_data(balanced_data_out, balanced_labels_out)

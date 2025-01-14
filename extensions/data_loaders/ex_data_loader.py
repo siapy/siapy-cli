@@ -15,4 +15,4 @@ class DataLoaderExample(BaseDataLoader):
             random_state=42,
         )
         labels = np.array([f"label_{label}" for label in numeric_labels])
-        return X, labels
+        return self._shuffle_data(X, labels)

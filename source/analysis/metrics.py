@@ -55,6 +55,14 @@ def cross_validate(
     meta_unique = np.unique(meta)
     metrics_cont = {key: MetricsContainer() for key in np.append(meta_unique, ALL)}
 
+    # Note: The following evaluation may produce different metrics compared to those optimized during the optimization step,
+    # as it is calculated slightly differently. To verify if this step matches the optimization step, you should run the following:
+    # from siapy.optimizers.scorers import Scorer
+    # CV = RepeatedStratifiedKFold(n_splits=5, n_repeats=3, random_state=0)
+    # SCORING = "f1_macro"
+    # scorer = Scorer.init_cross_validator_scorer(scoring=SCORING, cv=CV, n_jobs=-1)
+    # print(scorer(model=model, X=X, y=y))
+
     rskf = RepeatedStratifiedKFold(n_splits=5, n_repeats=5, random_state=1)
     for train_index, test_index in rskf.split(X, y, groups=None):
         x_train, x_test = X[train_index], X[test_index]

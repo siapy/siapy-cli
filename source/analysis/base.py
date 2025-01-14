@@ -35,6 +35,13 @@ class BaseDataLoader(ABC):
     def load_data(self) -> tuple[np.ndarray, np.ndarray]:
         raise NotImplementedError("Subclasses must implement this method")
 
+    def _shuffle_data(
+        self, X: np.ndarray, y: np.ndarray
+    ) -> tuple[np.ndarray, np.ndarray]:
+        rng = np.random.default_rng(0)
+        indices = rng.permutation(X.shape[0])
+        return X[indices], y[indices]
+
 
 class BaseSklearnModel(BaseEstimator, ABC):
     """
@@ -80,6 +87,7 @@ class BaseSklearnPipelineModel(BaseSklearnModel):
         return self.pipeline.transform(X)
 
     def fit_transform(self, X: np.ndarray, y: np.ndarray) -> np.ndarray:
+        self.pipeline = clone(self.pipeline)
         return self.pipeline.fit_transform(X, y)
 
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
