@@ -14,7 +14,7 @@ With this CLI, you can:
 - Convert segmented areas into spectral signatures.
 - Display spectral signatures.
 - Build a machine learning model using these spectral signatures.
-- Classify objects in the images based on the trained model.
+- Evaluate the model, generate metrics, and display results.
 
 ## 🏃‍♀️ Installation
 
@@ -79,6 +79,7 @@ Commands:
   info            General information about the project or the environment.
   misc            Miscellaneous commands, e.g., check images, statistics, etc.
   segment         Segmentation commands, e.g., select areas, train model, etc.
+  analysis        Analysis commands, e.g., train model, generate metrics, etc.
 ```
 
 ## 📖 Cookbook
@@ -99,6 +100,8 @@ Where:
 - The number of labels (`L`) can vary depending on the number of objects in the image.
 - Labels are separated by an underscore (`_`)
 - Double underscore (`__`) separates the label section from the rest of the filename.
+
+---
 
 ### Workflow - Segmentation of images
 
@@ -199,4 +202,60 @@ Example row:
   "object_idx": "1",
   "signature": [...]
   }
+```
+
+---
+
+### Workflow - Model training and classification
+
+**Configuration**
+
+For comprehensive CLI utilization, users can define the model, dataset, and hyperparameters to optimize the model.
+
+Extend functionality by implementing corresponding classes in `siapy-cli/extensions/` directory. Example implementations, prefixed with `ex_` (stands for example), are provided. Start from these examples and customize according to your requirements. Ensure compatibility with the CLI by inheriting from the same base classes. Newly added files are configured not to be tracked by git.
+
+Once implemented, use these classes by specifying `--data-loader`, `--model`, and `--parameters` arguments in CLI commands.
+
+> :exclamation: **Note**: Use method names, not file names, when calling newly implemented classes. For example, to use `DataLoaderExample`, use `--data-loader DataLoaderExample` (defined in ex_data_loader.py).
+
+**Dummy example**
+
+1. Test data load
+
+Verify proper data loading:
+
+``` zsh
+siapy-cli analysis test-load-data --data-loader DataLoaderExample
+```
+
+- This command returns the number of images, number of labels, and unique labels in the dataset.
+
+2. Train and optimize model
+
+``` zsh
+siapy-cli analysis train-model --model SavgolPLSSVC --data-loader DataLoaderExample --parameters ParamsSavgol --parameters ParamsPLS --parameters ParamsSVC --do-optimize
+```
+
+3. Generate metrics
+
+``` zsh
+siapy-cli analysis generate-metrics --model SavgolPLSSVC --data-loader DataLoaderExample --do-optimize
+```
+
+4. Generate plots
+
+``` zsh
+siapy-cli analysis generate-plots --model SavgolPLSSVC --data-loader DataLoaderExample --do-optimize
+```
+
+5. Calculate relevances
+
+``` zsh
+siapy-cli analysis calculate-relevances --model SavgolPLSSVC --data-loader DataLoaderExample --do-optimize
+```
+
+6. Display metrics
+
+``` zsh
+siapy-cli analysis display-metrics --model SavgolPLSSVC --data-loader DataLoaderExample --do-optimize
 ```
