@@ -108,7 +108,7 @@ def generate_plots(
     artifacts.save_signatures_plot(plots.signatures_display(encoder, X, y, bands))
     artifacts.save_umap_plot(plots.umap_display(encoder, X, y))
     shap_values = artifacts.load_shap_values()
-    if shap_values:
+    if shap_values is not None:
         artifacts.save_relevant_amplitudes_plot(
             plots.relevant_amplitudes(shap_values, bands)
         )
