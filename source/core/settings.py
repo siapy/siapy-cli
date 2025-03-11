@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from .logger import setup_logger
+
 DOTENV_PATH = ".env"
 
 BASE_DIR = Path(__file__).parent.parent.parent.absolute()
@@ -85,3 +87,4 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
+logger = setup_logger(settings.debug)

@@ -1,4 +1,3 @@
-from .logger import logger
-from .settings import settings
+from .settings import logger, settings
 
 __all__ = ["logger", "settings"]
