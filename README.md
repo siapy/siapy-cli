@@ -55,11 +55,11 @@ IMAGES_DIR=/path/to/your/spectral_images
 Run one of the following commands to verify the installation and check if everything is working:
 
 ``` zsh
-siapy-cli --version
+siapy-cli info --version
 # or
-pdm run ./source/main.py --version
+pdm run ./source/main.py info --version
 # or
-python ./source/main.py --version
+python ./source/main.py info --version
 # ...
 ```
 
