@@ -5,7 +5,7 @@
 groups = ["default", "dev", "lint"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:52bc1adf900e26d5699ecde8086091aca79e0d1eb832ec63c64cc28d0e77961f"
+content_hash = "sha256:176ce434fbd064f3e22175789180be90a5a4d643236c3ce8d93cc4c6200c864c"
 
 [[metadata.targets]]
 requires_python = "==3.10.*"
@@ -1889,6 +1889,17 @@ groups = ["lint"]
 files = [
     {file = "types-pytz-2024.1.0.20240417.tar.gz", hash = "sha256:6810c8a1f68f21fdf0f4f374a432487c77645a0ac0b31de4bf4690cf21ad3981"},
     {file = "types_pytz-2024.1.0.20240417-py3-none-any.whl", hash = "sha256:8335d443310e2db7b74e007414e74c4f53b67452c0cb0d228ca359ccfba59659"},
+]
+
+[[package]]
+name = "types-tabulate"
+version = "0.9.0.20241207"
+requires_python = ">=3.8"
+summary = "Typing stubs for tabulate"
+groups = ["dev"]
+files = [
+    {file = "types_tabulate-0.9.0.20241207-py3-none-any.whl", hash = "sha256:b8dad1343c2a8ba5861c5441370c3e35908edd234ff036d4298708a1d4cf8a85"},
+    {file = "types_tabulate-0.9.0.20241207.tar.gz", hash = "sha256:ac1ac174750c0a385dfd248edc6279fa328aaf4ea317915ab879a2ec47833230"},
 ]
 
 [[package]]

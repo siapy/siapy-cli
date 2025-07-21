@@ -75,6 +75,8 @@ def import_class(
         module_name = file.stem
         logger.info(f"Attempting to load module '{module_name}' from file '{file}'")
         spec = importlib.util.spec_from_file_location(module_name, file)
+        if spec is None or spec.loader is None:
+            continue
         module = importlib.util.module_from_spec(spec)
         sys.modules[module_name] = module
         spec.loader.exec_module(module)

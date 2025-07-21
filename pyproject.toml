@@ -20,26 +20,14 @@ license = { text = "MIT" }
 [project.scripts]
 siapy-cli = "source.main:app"
 
-[tool.pdm]
-distribution = true
-
-[tool.pdm.build]
-source-includes = ["source/"]
-
-[tool.pdm.scripts]
-siapy-cli.cmd = "source/main.py"
-siapy-cli.env_file.override = ".env"
-
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
-[tool.pdm.dev-dependencies]
-lint = ["ruff>=0.4.8", "mypy>=1.10.1", "pandas-stubs>=2.2.2.240603"]
-dev = ["pre-commit>=3.7.1", "tomli>=2.0.1", "codespell>=2.3.0"]
-
 [tool.mypy]
 mypy_path = "stubs"
+packages = ["source"]
+explicit_package_bases = true
 
 [[tool.mypy.overrides]]
 module = "spectral"
@@ -47,6 +35,18 @@ ignore_missing_imports = true
 
 [[tool.mypy.overrides]]
 module = "sklearn.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "scipy.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "shap"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "umap"
 ignore_missing_imports = true
 
 [tool.ruff]
@@ -63,3 +63,25 @@ check-hidden = false
 
 [tool.flake8]
 max-line-length = 120
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.build]
+source-includes = ["source/"]
+
+[tool.pdm.scripts]
+siapy-cli.cmd = "source/main.py"
+siapy-cli.env_file.override = ".env"
+
+[tool.pdm.dev-dependencies]
+lint = ["ruff>=0.4.8", "mypy>=1.10.1", "pandas-stubs>=2.2.2.240603"]
+
+
+[dependency-groups]
+dev = [
+    "pre-commit>=3.7.1",
+    "tomli>=2.0.1",
+    "codespell>=2.3.0",
+    "types-tabulate>=0.9.0.20241207",
+]

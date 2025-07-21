@@ -12,6 +12,7 @@ from source.analysis.extensions import (
 )
 from source.analysis.params import DirParams
 from source.analysis.trainer import Trainer
+from source.core import logger
 
 app = typer.Typer()
 
@@ -51,9 +52,15 @@ def train_model(
     if do_optimize:
         # Combine all parameter lists into a single list and categorize them
         # based on their types (float, int, categorical) for optimization
-        params = reduce(lambda x, y: x + y, [import_parameters(p) for p in parameters])
-        study = trainer.optimize(X, y, params.get_trial_parameters())
-        artifacts.save_study(study)
+        if parameters is not None:
+            params = reduce(
+                lambda x, y: x + y, [import_parameters(p) for p in parameters]
+            )
+            study = trainer.optimize(X, y, params.get_trial_parameters())
+            artifacts.save_study(study)
+        else:
+            logger.warning("No parameters provided for optimization")
+            return
     else:
         score = trainer.score_model(X, y)
         artifacts.save_metric(score)

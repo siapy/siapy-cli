@@ -4,8 +4,7 @@ from typing import Any
 
 import numpy as np
 import pandas as pd
-from siapy.entities import Pixels
-from siapy.entities.imagesets import SpectralImage
+from siapy.entities import Pixels, SpectralImage
 from siapy.utils.images import save_image
 from sklearn.preprocessing import LabelEncoder
 from source.core import logger, settings

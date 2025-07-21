@@ -48,7 +48,7 @@ def relevant_features(
     ax.pcolormesh(x, y_coords, gradient, cmap=cmap, vmin=1, shading="flat")
 
     ax.set_xlabel("Wavelength [nm]")
-    ax.xaxis.label.set_size(12)
+    ax.xaxis.label.set_fontsize(12)
     ax.set_yticklabels([])
 
     return fig

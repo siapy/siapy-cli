@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from siapy.entities.imagesets import SpectralImage, SpectralImageSet
+from siapy.entities import SpectralImage, SpectralImageSet
 from source.core import logger, settings
 
 

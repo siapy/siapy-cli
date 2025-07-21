@@ -10,11 +10,10 @@ from tabulate import tabulate
 
 def generate_metrics_table(metrics: list[Metrics]):
     headers = ["ID"] + list(METRIC_FUNC.keys())
-    grouped_metrics = defaultdict(list)
+    grouped_metrics: defaultdict[str, list[str]] = defaultdict(list)
     for metric in metrics:
-        grouped_metrics[metric.meta_id].append(
-            f"{metric.mean:.2f} (+- {metric.std:.2f})"
-        )
+        meta_id = str(metric.meta_id) if metric.meta_id is not None else "unknown"
+        grouped_metrics[meta_id].append(f"{metric.mean:.2f} (+- {metric.std:.2f})")
     rows = [[meta_id] + values for meta_id, values in grouped_metrics.items()]
     table = tabulate(rows, headers, tablefmt="grid")
     metrics_all = metrics[-len(METRIC_FUNC.keys()) :]

@@ -116,9 +116,8 @@ class Artifacts:
             write_txt(table, save_path / RESULTS_METRICS_REDUCED)
         else:
             write_txt(table, save_path / RESULTS_METRICS)
-            _ = [
-                write_txt(f"{m.mean:.2f}", save_path / f"{m.name}") for m in metrics_all
-            ]
+            for m in metrics_all:
+                write_txt(f"{m.mean:.2f}", save_path / f"{m.name}")
 
     def load_metrics(self) -> Optional[dict[str, list[Metrics]]]:
         if not OUT_DIR:
