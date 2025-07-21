@@ -2,7 +2,7 @@
 
 This repository provides a command line interface (CLI) for the [siapy](https://github.com/siapy/siapy-lib) library.
 
-> :exclamation: **Note**: This project is subject to frequent changes. To ensure you have the latest updates, please clone a fresh copy of the repository before use. Currently, the repository is not versioned and will remain unversioned until the project reaches greater stability.
+> :exclamation: **Note**: This repository was developed for academic purposes and serves as a segmentation tool for hyperspectral data preparation, machine learning model training, and hypothesis testing. It demonstrates how the siapy library can be used for these and similar purposes. Please note that while the siapy library has progressed since this implementation, this CLI uses an earlier version for compatibility with the academic research it was designed to support.
 
 With this CLI, you can:
 
