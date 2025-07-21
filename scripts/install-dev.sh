@@ -7,7 +7,8 @@ set -x
 curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 
 # Install python libraries
-pdm install
+pdm install --dev
+pdm sync
 
 # Install pre-commit
 pdm run pre-commit install --hook-type commit-msg
