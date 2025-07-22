@@ -27,9 +27,9 @@ def load_dataframe() -> pd.DataFrame:
     # Remove Band_X_SWIR (X: 75-91 and 158-187)
     cols_to_remove = (
         [f"Band_{i}_NIR" for i in range(1, 6)]
-        + [f"Band_{i}_NIR" for i in range(156, 161)]
+        + [f"Band_{i}_NIR" for i in range(141, 161)]
         + [f"Band_{i}_SWIR" for i in range(1, 6)]
-        + [f"Band_{i}_SWIR" for i in range(284, 289)]
+        + [f"Band_{i}_SWIR" for i in range(281, 289)]
         + [f"Band_{i}_SWIR" for i in range(75, 92)]
         + [f"Band_{i}_SWIR" for i in range(158, 188)]
     )
@@ -41,6 +41,10 @@ def load_dataframe() -> pd.DataFrame:
             axis=1
         )
     ]
+    # Remove date with zero values
+    # combined_df = combined_df[combined_df["date"] != "2023_09_20"]
+    # combined_df = combined_df[combined_df["date"] == "2024_09_23"]
+    # combined_df = combined_df[combined_df["gerk"] == "6006"
     return combined_df
 
 

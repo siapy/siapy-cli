@@ -106,7 +106,6 @@ class SNVTransformer(BaseEstimator, TransformerMixin):
 class SavgolXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("xgb", XGBClassifier(random_state=0)),
@@ -117,7 +116,6 @@ class SavgolXGB(BaseSklearnPipelineModel):
 class SavgolSVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("svc", SVC(random_state=0)),
@@ -128,7 +126,6 @@ class SavgolSVC(BaseSklearnPipelineModel):
 class SavgolPLSXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("pls", PLSRegressionWrapper()),
@@ -140,7 +137,6 @@ class SavgolPLSXGB(BaseSklearnPipelineModel):
 class SavgolPLSSVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("pls", PLSRegressionWrapper()),
@@ -152,7 +148,6 @@ class SavgolPLSSVC(BaseSklearnPipelineModel):
 class SavgolICASVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("ica", FastICA(random_state=0)),
@@ -164,7 +159,6 @@ class SavgolICASVC(BaseSklearnPipelineModel):
 class SavgolICAXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("ica", FastICA(random_state=0)),
@@ -176,7 +170,6 @@ class SavgolICAXGB(BaseSklearnPipelineModel):
 class SavgolKPCASVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("kpca", KernelPCA(kernel="rbf", random_state=0)),
@@ -188,7 +181,6 @@ class SavgolKPCASVC(BaseSklearnPipelineModel):
 class SavgolKPCAXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("savgol", SavgolWrapper()),
             ("kpca", KernelPCA(kernel="rbf", random_state=0)),
@@ -200,7 +192,6 @@ class SavgolKPCAXGB(BaseSklearnPipelineModel):
 class FFTXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("xgb", XGBClassifier(random_state=0)),
@@ -211,7 +202,6 @@ class FFTXGB(BaseSklearnPipelineModel):
 class FFTSVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("svc", SVC(random_state=0)),
@@ -222,7 +212,6 @@ class FFTSVC(BaseSklearnPipelineModel):
 class FFTPLSXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("pls", PLSRegressionWrapper()),
@@ -234,7 +223,6 @@ class FFTPLSXGB(BaseSklearnPipelineModel):
 class FFTPLSSVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("pls", PLSRegressionWrapper()),
@@ -246,7 +234,6 @@ class FFTPLSSVC(BaseSklearnPipelineModel):
 class FFTICASVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("ica", FastICA(random_state=0)),
@@ -258,7 +245,6 @@ class FFTICASVC(BaseSklearnPipelineModel):
 class FFTICAXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("ica", FastICA(random_state=0)),
@@ -270,7 +256,6 @@ class FFTICAXGB(BaseSklearnPipelineModel):
 class FFTKPCASVC(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("kpca", KernelPCA(kernel="rbf", random_state=0)),
@@ -282,7 +267,6 @@ class FFTKPCASVC(BaseSklearnPipelineModel):
 class FFTKPCAXGB(BaseSklearnPipelineModel):
     pipeline = Pipeline(
         [
-            ("snv", SNVTransformer()),
             ("scaler", StandardScaler()),
             ("fft", FFTWrapper()),
             ("kpca", KernelPCA(kernel="rbf", random_state=0)),
