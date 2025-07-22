@@ -34,6 +34,13 @@ def load_dataframe() -> pd.DataFrame:
         + [f"Band_{i}_SWIR" for i in range(158, 188)]
     )
     combined_df.drop(columns=cols_to_remove, inplace=True)
+    combined_df.dropna(inplace=True)
+    # Remove negative values
+    combined_df = combined_df[
+        (combined_df.drop(columns=["date", "GERK_ID_St", "gerk", "id", "st"]) >= 0).all(
+            axis=1
+        )
+    ]
     return combined_df
 
 
