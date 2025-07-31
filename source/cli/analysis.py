@@ -88,6 +88,7 @@ def generate_metrics(
 
     metrics_ = metrics.calculate_metrics(model_, encoder, X, y)
     artifacts.save_metrics(metrics_)
+    # artifacts.save_target_stats(y)
 
 
 @app.command()

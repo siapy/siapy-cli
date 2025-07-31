@@ -188,5 +188,11 @@ class Artifacts:
             logger.warning(f"Could not load spectral bands: {e}")
         return None
 
+    def save_target_stats(self, target: np.ndarray):
+        save_path = self._set_save_path(RESULTS)
+        unique, counts = np.unique(target, return_counts=True)
+        target_stats = dict(zip(unique.tolist(), counts.tolist()))
+        write_json(target_stats, save_path / "target_stats.json")
+
 
 artifacts = Artifacts()
