@@ -12,7 +12,7 @@ class InterceptHandler(logging.Handler):
         logger_opt.log(record.levelname, record.getMessage())
 
 
-@lru_cache()
+@lru_cache
 def setup_logger(debug: bool = False) -> loguru._Logger:  # type: ignore
     LOGGING_LEVEL = logging.DEBUG if debug else logging.INFO
     logging.basicConfig(

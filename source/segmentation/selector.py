@@ -2,7 +2,6 @@ from siapy.entities import Pixels
 from siapy.utils.plots import (
     pixels_select_lasso,
 )
-
 from source.core import logger
 from source.misc.helpers import (
     extract_labels_from_spectral_images,
