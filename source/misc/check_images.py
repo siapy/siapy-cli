@@ -32,6 +32,6 @@ def check_spectral_images():
         f"   Number of labels: {len(labels_cam1)} (cam1), {len(labels_cam2)} (cam2)\n"
     )
     msg += f"   Number of unique labels: {len(labels_unique)} \n"
-    msg += f"   Labels: \n{str(labels_unique)} \n"
-    msg += f"   Duplicated labels: \n{str(labels_duplicated)} \n"
+    msg += f"   Labels: \n{labels_unique!s} \n"
+    msg += f"   Duplicated labels: \n{labels_duplicated!s} \n"
     logger.info(f"Report: \n{msg}")

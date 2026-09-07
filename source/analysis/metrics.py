@@ -33,7 +33,7 @@ ALL = 1000
 @dataclass
 class MetricsContainer:
     def __init__(self):
-        self._metrics = {key: [] for key in METRIC_FUNC.keys()}
+        self._metrics = {key: [] for key in METRIC_FUNC}
 
     def calculate(self, y_test: ArrayLike, y_pred: ArrayLike):
         for metric_name, metric_func in METRIC_FUNC.items():
