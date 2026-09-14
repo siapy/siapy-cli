@@ -1,5 +1,3 @@
-from typing import Optional
-
 import numpy as np
 from matplotlib import pyplot as plt
 from siapy.entities import Pixels
@@ -14,7 +12,7 @@ from source.misc.helpers import (
 )
 
 
-def display_spectral_image(label: Optional[str] = None):
+def display_spectral_image(label: str | None = None):
     image_set_cam1, image_set_cam2 = read_spectral_images()
 
     if not image_set_cam1 or not image_set_cam2:

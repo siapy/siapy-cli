@@ -1,14 +1,4 @@
-from typing import Optional
-
 import typer
-from source.segmentation.artifacts import (
-    load_all_selected_areas,
-    load_model,
-    load_transformation_matrix,
-    save_model,
-    save_selected_areas,
-    save_transformation_matrix,
-)
 from source.misc.display_image import (
     display_spectral_images_with_areas,
 )
@@ -20,6 +10,14 @@ from source.segmentation import (
     perform_segmentation,
     select_areas_on_images,
     train_xgboost_model,
+)
+from source.segmentation.artifacts import (
+    load_all_selected_areas,
+    load_model,
+    load_transformation_matrix,
+    save_model,
+    save_selected_areas,
+    save_transformation_matrix,
 )
 
 app = typer.Typer()
@@ -52,7 +50,7 @@ def train_model():
 
 
 @app.command()
-def segment_images(label: Optional[str] = None):
+def segment_images(label: str | None = None):
     encoder_cam1, model_cam1, encoder_cam2, model_cam2 = load_model()
     matx = load_transformation_matrix()
     perform_segmentation(
