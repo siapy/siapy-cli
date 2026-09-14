@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 
 from pydantic import BaseModel, model_validator
 from source.analysis.extensions import DEFAULT_DATA_LOADER_NAME, DEFAULT_ESTIMATOR_NAME
@@ -7,9 +6,9 @@ from typing_extensions import Self
 
 
 class DirParams(BaseModel):
-    estimator_name: Optional[str] = None
+    estimator_name: str | None = None
     estimator_is_optimized: bool = False
-    data_loader_name: Optional[str] = None
+    data_loader_name: str | None = None
 
     @model_validator(mode="after")
     def set_default_names(self) -> Self:

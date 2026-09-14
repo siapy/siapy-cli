@@ -11,13 +11,13 @@ from siapy.utils.plots import (
 )
 from sklearn.preprocessing import LabelEncoder
 from source.core import logger, settings
-from source.segmentation.artifacts import (
-    read_spectral_images,
-    save_radiance_image,
-)
 from source.misc.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
+)
+from source.segmentation.artifacts import (
+    read_spectral_images,
+    save_radiance_image,
 )
 from xgboost import XGBClassifier
 
@@ -150,9 +150,7 @@ def perform_segmentation(
 
         logger.info(f"Processed index: '__ {index} __' ")
         logger.info(
-            "Processed files:\n -> Camera 1 '{}'\n -> Camera 2 '{}'".format(
-                image_cam1.filepath.stem, image_cam2.filepath.stem
-            )
+            f"Processed files:\n -> Camera 1 '{image_cam1.filepath.stem}'\n -> Camera 2 '{image_cam2.filepath.stem}'"
         )
 
         selected_areas_cam1 = pixels_select_lasso(image_cam1)
