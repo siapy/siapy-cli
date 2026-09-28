@@ -1,5 +1,4 @@
 from collections import defaultdict
-from typing import Optional
 
 from rich import print as RichPrint
 from rich.text import Text as RichText
@@ -22,9 +21,9 @@ def generate_metrics_table(metrics: list[Metrics]):
 
 def display_metrics(
     metrics: dict[str, list[Metrics]],
-    model: Optional[str] = None,
-    do_optimize: Optional[bool] = None,
-    data_loader: Optional[str] = None,
+    model: str | None = None,
+    do_optimize: bool | None = None,
+    data_loader: str | None = None,
 ):
     def check_filter(params: DirParams) -> bool:
         if model is not None and params.estimator_name != model:
