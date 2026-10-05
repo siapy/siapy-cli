@@ -1,9 +1,7 @@
-from typing import Optional
-
-import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 import umap
+from matplotlib import cm
 from matplotlib.figure import Figure
 from matplotlib.lines import Line2D
 from sklearn.base import BaseEstimator, clone
@@ -16,7 +14,7 @@ from source.analysis.tools import smooth_relevances
 
 
 def relevant_features(
-    relevances: np.ndarray, bands: Optional[np.ndarray] = None
+    relevances: np.ndarray, bands: np.ndarray | None = None
 ) -> Figure:
     y = smooth_relevances(relevances)
     indices_by_relevance = np.argsort(y)[::-1]
@@ -55,7 +53,7 @@ def relevant_features(
 
 
 def relevant_amplitudes(
-    relevances: np.ndarray, bands: Optional[np.ndarray] = None
+    relevances: np.ndarray, bands: np.ndarray | None = None
 ) -> Figure:
     if bands is None:
         bands = np.arange(len(relevances))
@@ -121,7 +119,7 @@ def signatures_display(
     encoder: LabelEncoder,
     X: np.ndarray,
     y: np.ndarray,
-    bands: Optional[np.ndarray] = None,
+    bands: np.ndarray | None = None,
     *,
     x_label: str = "Spectral bands",
     y_label: str = "",
@@ -186,7 +184,7 @@ def umap_display(
     encoder: LabelEncoder,
     X: np.ndarray,
     y: np.ndarray,
-    meta: Optional[np.ndarray] = None,
+    meta: np.ndarray | None = None,
 ) -> Figure:
     y_encoded = np.array(encoder.fit_transform(y))
     classes = encoder.classes_
