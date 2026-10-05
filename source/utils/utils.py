@@ -3,43 +3,44 @@ import json
 import pickle
 import sys
 from collections import OrderedDict
+from collections.abc import Generator
 from pathlib import Path
-from typing import Any, Generator, Optional, Union
+from typing import Any
 
 from source.core import logger
 
 
-def read_json(fname: Union[str, Path]) -> OrderedDict:
+def read_json(fname: str | Path) -> OrderedDict:
     fname = Path(fname)
     with fname.open("rt") as handle:
         return json.load(handle, object_hook=OrderedDict)
 
 
-def write_json(content: Any, fname: Union[str, Path]) -> None:
+def write_json(content: Any, fname: str | Path) -> None:
     fname = Path(fname)
     with fname.open("wt") as handle:
         json.dump(content, handle, indent=4, sort_keys=False)
 
 
-def write_pickle(content: Any, fname: Union[str, Path]) -> None:
+def write_pickle(content: Any, fname: str | Path) -> None:
     fname = Path(fname)
     with open(fname, "wb") as f:
         pickle.dump(content, f)
 
 
-def read_pickle(fname: Union[str, Path]) -> Any:
+def read_pickle(fname: str | Path) -> Any:
     fname = Path(fname)
     with open(fname, "rb") as f:
         return pickle.load(f)
 
 
-def write_txt(content: str, fname: Union[str, Path]) -> None:
+def write_txt(content: str, fname: str | Path) -> None:
     fname = Path(fname)
     with fname.open("w") as handle:
         handle.write(content)
 
 
-def read_txt(fname: Union[str, Path]) -> str:
+def read_txt(fname: str | Path) -> str:
     fname = Path(fname)
     with fname.open("r") as handle:
         return handle.read()
@@ -58,7 +59,7 @@ def dict_zip(*dicts: dict[str, Any]) -> Generator[tuple[str, Any, Any], None, No
 
 
 def import_class(
-    class_name: Optional[str],
+    class_name: str | None,
     directory: Path,
     default_class_name: str,
 ) -> Any:

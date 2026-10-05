@@ -2,14 +2,13 @@ import numpy as np
 from siapy.entities import Pixels
 from siapy.transformations import corregistrator
 from sklearn.preprocessing import LabelEncoder
-from xgboost import XGBClassifier
-
 from source.core import logger
 from source.misc.helpers import (
     extract_labels_from_spectral_images,
     get_images_by_label,
     read_spectral_images,
 )
+from xgboost import XGBClassifier
 
 
 def convert_selected_areas_to_train_data(

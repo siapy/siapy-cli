@@ -1,5 +1,4 @@
 from functools import reduce
-from typing import Optional
 
 import typer
 from rich import print
@@ -19,7 +18,7 @@ app = typer.Typer()
 
 @app.command()
 def test_load_data(
-    data_loader: Optional[str] = None,
+    data_loader: str | None = None,
 ):
     loader = import_data_loader(data_loader)
     loader.load_data()
@@ -32,10 +31,10 @@ def test_load_data(
 
 @app.command()
 def train_model(
-    model: Optional[str] = None,
-    data_loader: Optional[str] = None,
+    model: str | None = None,
+    data_loader: str | None = None,
     do_optimize: bool = False,
-    parameters: Optional[list[str]] = None,
+    parameters: list[str] | None = None,
 ):
     artifacts.set_dir_params(
         DirParams(
@@ -69,8 +68,8 @@ def train_model(
 
 @app.command()
 def generate_metrics(
-    model: Optional[str] = None,
-    data_loader: Optional[str] = None,
+    model: str | None = None,
+    data_loader: str | None = None,
     do_optimize: bool = False,
 ):
     artifacts.set_dir_params(
@@ -93,8 +92,8 @@ def generate_metrics(
 
 @app.command()
 def generate_plots(
-    model: Optional[str] = None,
-    data_loader: Optional[str] = None,
+    model: str | None = None,
+    data_loader: str | None = None,
     do_optimize: bool = False,
 ):
     artifacts.set_dir_params(
@@ -127,8 +126,8 @@ def generate_plots(
 
 @app.command()
 def calculate_relevances(
-    model: Optional[str] = None,
-    data_loader: Optional[str] = None,
+    model: str | None = None,
+    data_loader: str | None = None,
     do_optimize: bool = False,
 ):
     artifacts.set_dir_params(
@@ -149,8 +148,8 @@ def calculate_relevances(
 
 @app.command()
 def display_metrics(
-    model: Optional[str] = None,
-    data_loader: Optional[str] = None,
+    model: str | None = None,
+    data_loader: str | None = None,
     do_optimize: bool = False,
 ):
     metrics_ = artifacts.load_metrics()
